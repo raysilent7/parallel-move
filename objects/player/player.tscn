@@ -1,0 +1,105 @@
+[gd_scene format=3 uid="uid://j0tq4omw5yxh"]
+
+[ext_resource type="Texture2D" uid="uid://b6rh5tlxpinba" path="res://assets/images/diver walking.png" id="1_cqmt1"]
+[ext_resource type="Script" uid="uid://bij5r1lvsdann" path="res://scripts/player.gd" id="1_g7ett"]
+[ext_resource type="Script" uid="uid://dkd1ba1rarv5m" path="res://scripts/inverted.gd" id="1_ssrue"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ssrue"]
+atlas = ExtResource("1_cqmt1")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jnjyq"]
+atlas = ExtResource("1_cqmt1")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gnkmh"]
+atlas = ExtResource("1_cqmt1")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xkryw"]
+atlas = ExtResource("1_cqmt1")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ow0dq"]
+atlas = ExtResource("1_cqmt1")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4kly"]
+atlas = ExtResource("1_cqmt1")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xgwla"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ssrue")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jnjyq")
+}],
+"loop": true,
+"name": &"jumping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gnkmh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xkryw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ow0dq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4kly")
+}],
+"loop": true,
+"name": &"walking",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g7ett"]
+radius = 7.0
+
+[node name="Player" type="Node2D" unique_id=1047240455]
+script = ExtResource("1_ssrue")
+
+[node name="playerBody" type="CharacterBody2D" parent="." unique_id=882441884]
+script = ExtResource("1_g7ett")
+
+[node name="playerAnim" type="AnimatedSprite2D" parent="playerBody" unique_id=941827179]
+sprite_frames = SubResource("SpriteFrames_xgwla")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="playerCollision" type="CollisionShape2D" parent="playerBody" unique_id=1412902186]
+position = Vector2(1, 0)
+shape = SubResource("CapsuleShape2D_g7ett")
+
+[node name="playerCam" type="Camera2D" parent="playerBody" unique_id=1982908920]
+zoom = Vector2(1.7, 1.7)
+
+[node name="playerBody2" type="CharacterBody2D" parent="." unique_id=1044717490]
+position = Vector2(0, 64)
+rotation = 3.1415927
+up_direction = Vector2(0, 1)
+script = ExtResource("1_g7ett")
+inverted = true
+
+[node name="playerAnim2" type="AnimatedSprite2D" parent="playerBody2" unique_id=373174355]
+position = Vector2(-1, 0)
+sprite_frames = SubResource("SpriteFrames_xgwla")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="playerCollision2" type="CollisionShape2D" parent="playerBody2" unique_id=71792762]
+shape = SubResource("CapsuleShape2D_g7ett")
+
+[node name="playerCam2" type="Camera2D" parent="playerBody2" unique_id=509935217]
+zoom = Vector2(1.7, 1.7)
