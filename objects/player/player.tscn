@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://j0tq4omw5yxh"]
 
 [ext_resource type="Texture2D" uid="uid://b6rh5tlxpinba" path="res://assets/images/diver walking.png" id="1_cqmt1"]
-[ext_resource type="Script" uid="uid://bij5r1lvsdann" path="res://scripts/player.gd" id="1_g7ett"]
-[ext_resource type="Script" uid="uid://dkd1ba1rarv5m" path="res://scripts/playerController.gd" id="1_ssrue"]
+[ext_resource type="Script" uid="uid://bij5r1lvsdann" path="res://scripts/player/player.gd" id="1_g7ett"]
+[ext_resource type="Script" uid="uid://dkd1ba1rarv5m" path="res://scripts/player/playerController.gd" id="1_ssrue"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ssrue"]
 atlas = ExtResource("1_cqmt1")
