@@ -3,14 +3,12 @@ extends CharacterBody2D
 @onready var animation: AnimatedSprite2D = $playerAnim
 @export var inverted: bool = false
 
-var baseSpeed: int = 100
 var baseGravity: int = 300
-var baseJumpForce: int = -300
+var baseJumpForce: int = -210
 var canJump: bool = true
 var locked: bool = false
 
 func _ready() -> void:
-	animation.flip_h = inverted
 	invertValues()
 
 func _physics_process(_delta: float) -> void:
@@ -21,18 +19,14 @@ func _physics_process(_delta: float) -> void:
 
 func invertValues() -> void:
 	if inverted:
+		animation.flip_h = inverted
 		up_direction = Vector2.DOWN
 		baseGravity *= -1
 		baseJumpForce *= -1
 
-func tryToMove() -> bool:
-	velocity.x = baseSpeed
+func tryToMove(speed) -> void:
+	velocity.x = speed
 	move_and_slide()
-
-	if is_on_wall():
-		return false
-
-	return true
 
 func applyGravity() -> void:
 	if not is_on_floor():
@@ -51,9 +45,13 @@ func jump() -> void:
 		canJump = false
 
 func resolveAnimation() -> void:
-	if velocity.x == 0 and (is_on_floor() or inverted):
+	if velocity.x == 0 and is_on_floor():
 		animation.play("idle")
-	elif velocity.x != 0:
+	elif velocity.x > 0:
 		animation.play("walking")
+		animation.flip_h = true if inverted else false
+	elif velocity.x < 0:
+		animation.play("walking")
+		animation.flip_h = false if inverted else true
 	else:
 		animation.play("jumping")

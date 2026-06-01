@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b6rh5tlxpinba" path="res://assets/images/diver walking.png" id="1_cqmt1"]
 [ext_resource type="Script" uid="uid://bij5r1lvsdann" path="res://scripts/player.gd" id="1_g7ett"]
-[ext_resource type="Script" uid="uid://dkd1ba1rarv5m" path="res://scripts/inverted.gd" id="1_ssrue"]
+[ext_resource type="Script" uid="uid://dkd1ba1rarv5m" path="res://scripts/playerController.gd" id="1_ssrue"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ssrue"]
 atlas = ExtResource("1_cqmt1")
@@ -92,14 +92,11 @@ up_direction = Vector2(0, 1)
 script = ExtResource("1_g7ett")
 inverted = true
 
-[node name="playerAnim2" type="AnimatedSprite2D" parent="playerBody2" unique_id=373174355]
+[node name="playerAnim" type="AnimatedSprite2D" parent="playerBody2" unique_id=373174355]
 position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_xgwla")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="playerCollision2" type="CollisionShape2D" parent="playerBody2" unique_id=71792762]
+[node name="playerCollision" type="CollisionShape2D" parent="playerBody2" unique_id=71792762]
 shape = SubResource("CapsuleShape2D_g7ett")
-
-[node name="playerCam2" type="Camera2D" parent="playerBody2" unique_id=509935217]
-zoom = Vector2(1.7, 1.7)
