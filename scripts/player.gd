@@ -45,12 +45,12 @@ func jump() -> void:
 		canJump = false
 
 func resolveAnimation() -> void:
-	if velocity.x == 0 and is_on_floor():
+	if Input.get_axis("left", "right") == 0 and is_on_floor():
 		animation.play("idle")
-	elif velocity.x > 0:
+	elif Input.get_axis("left", "right") > 0:
 		animation.play("walking")
 		animation.flip_h = true if inverted else false
-	elif velocity.x < 0:
+	elif Input.get_axis("left", "right") < 0:
 		animation.play("walking")
 		animation.flip_h = false if inverted else true
 	else:

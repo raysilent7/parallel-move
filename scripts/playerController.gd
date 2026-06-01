@@ -7,12 +7,18 @@ var baseSpeed = 70
 
 func _physics_process(_delta):
 	var inputDir = Input.get_axis("left", "right")
+	var xSpeed = inputDir * baseSpeed
 
 	if inputDir == 0:
 		p1.tryToMove(0)
 		p2.tryToMove(0)
 		return
 
-	var xSpeed = inputDir * baseSpeed
 	p1.tryToMove(xSpeed)
 	p2.tryToMove(xSpeed)
+
+	if p1.global_position.x > p2.global_position.x or p1.global_position.x < p2.global_position.x:
+		p1.global_position.x = p2.global_position.x
+		p1.tryToMove(0)
+		if p1.global_position.x > p2.global_position.x or p1.global_position.x < p2.global_position.x:
+			p2.global_position.x = p1.global_position.x
