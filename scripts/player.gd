@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var inverted: bool = false
 
 var baseGravity: int = 300
-var baseJumpForce: int = -210
+var baseJumpForce: int = -270
 var canJump: bool = true
 var locked: bool = false
 
@@ -14,7 +14,6 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	applyGravity()
 	jump()
-	move_and_slide()
 	resolveAnimation()
 
 func invertValues() -> void:

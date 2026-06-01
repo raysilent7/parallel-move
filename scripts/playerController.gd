@@ -3,7 +3,7 @@ extends Node2D
 @onready var p1 = $playerBody
 @onready var p2 = $playerBody2
 
-var baseSpeed = 70
+var baseSpeed = 100
 
 func _physics_process(_delta):
 	var inputDir = Input.get_axis("left", "right")
