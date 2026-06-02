@@ -5,6 +5,10 @@ extends Node2D
 
 var baseSpeed: int = 100
 
+func _ready() -> void:
+	GameState.lastCheckpointP1 = p1.global_position
+	GameState.lastCheckpointP2 = p2.global_position
+
 func _physics_process(_delta) -> void:
 	var inputDir = Input.get_axis("left", "right")
 	var xSpeed = inputDir * baseSpeed
@@ -22,3 +26,7 @@ func _physics_process(_delta) -> void:
 		p1.tryToMove(0)
 		if p1.global_position.x > p2.global_position.x or p1.global_position.x < p2.global_position.x:
 			p2.global_position.x = p1.global_position.x
+
+func movePlayerToCheckPoint() -> void:
+	p1.global_position = GameState.lastCheckpointP1
+	p2.global_position = GameState.lastCheckpointP2
