@@ -1,0 +1,20 @@
+[gd_resource type="TileSet" format=3 uid="uid://d3h1hanubuxiy"]
+
+[ext_resource type="Texture2D" uid="uid://dlx0y4egj08aw" path="res://assets/images/basic trap.png" id="1_1nng5"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ogq2q"]
+texture = ExtResource("1_1nng5")
+0:0/0 = 0
+7:0/0 = 0
+1:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+0:1/0 = 0
+
+[resource]
+physics_layer_0/collision_layer = 1
+custom_data_layer_0/name = ""
+custom_data_layer_0/type = 0
+sources/0 = SubResource("TileSetAtlasSource_ogq2q")
