@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://b6rh5tlxpinba" path="res://assets/images/diver walking.png" id="1_cqmt1"]
 [ext_resource type="Script" uid="uid://bij5r1lvsdann" path="res://scripts/player/player.gd" id="1_g7ett"]
 [ext_resource type="Script" uid="uid://dkd1ba1rarv5m" path="res://scripts/player/playerController.gd" id="1_ssrue"]
+[ext_resource type="Texture2D" uid="uid://byju2mquwytmp" path="res://assets/images/charles.png" id="4_jnjyq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ssrue"]
 atlas = ExtResource("1_cqmt1")
@@ -65,38 +66,46 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g7ett"]
-radius = 7.0
+height = 60.0
 
 [node name="Player" type="Node2D" unique_id=1047240455]
 script = ExtResource("1_ssrue")
 
 [node name="playerBody" type="CharacterBody2D" parent="." unique_id=882441884]
 script = ExtResource("1_g7ett")
+metadata/_edit_lock_ = true
 
 [node name="playerAnim" type="AnimatedSprite2D" parent="playerBody" unique_id=941827179]
+visible = false
 sprite_frames = SubResource("SpriteFrames_xgwla")
 animation = &"idle"
 autoplay = "idle"
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="playerBody" unique_id=435134945]
+texture = ExtResource("4_jnjyq")
+metadata/_edit_lock_ = true
 
 [node name="playerCollision" type="CollisionShape2D" parent="playerBody" unique_id=1412902186]
-position = Vector2(1, 0)
+position = Vector2(-1, 3)
 shape = SubResource("CapsuleShape2D_g7ett")
 
-[node name="playerCam" type="Camera2D" parent="playerBody" unique_id=1982908920]
-zoom = Vector2(1.7, 1.7)
-
 [node name="playerBody2" type="CharacterBody2D" parent="." unique_id=1044717490]
-position = Vector2(0, 64)
+position = Vector2(0, 96)
 rotation = 3.1415927
 up_direction = Vector2(0, 1)
 script = ExtResource("1_g7ett")
 inverted = true
 
 [node name="playerAnim" type="AnimatedSprite2D" parent="playerBody2" unique_id=373174355]
+visible = false
 position = Vector2(-1, 0)
 sprite_frames = SubResource("SpriteFrames_xgwla")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="Sprite2D" type="Sprite2D" parent="playerBody2" unique_id=2080417859]
+texture = ExtResource("4_jnjyq")
 
 [node name="playerCollision" type="CollisionShape2D" parent="playerBody2" unique_id=71792762]
 shape = SubResource("CapsuleShape2D_g7ett")
