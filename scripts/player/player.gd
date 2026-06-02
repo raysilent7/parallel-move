@@ -6,7 +6,6 @@ extends CharacterBody2D
 var baseGravity: int = 300
 var baseJumpForce: int = -270
 var canJump: bool = true
-var locked: bool = false
 
 func _ready() -> void:
 	invertValues()
