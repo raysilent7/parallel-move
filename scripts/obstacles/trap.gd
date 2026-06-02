@@ -1,6 +1,6 @@
 extends Area2D
 
-@onready var playerController: Node2D = $"../../Player"
+@onready var playerController: Node2D = $"../Player"
 
 func _ready() -> void:
 	body_entered.connect(onBodyEntered)

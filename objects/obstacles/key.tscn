@@ -139,5 +139,3 @@ script = ExtResource("2_nafwf")
 [node name="keyCollision" type="CollisionShape2D" parent="keyArea" unique_id=1769526132]
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_1ioge")
-
-[connection signal="body_entered" from="keyArea" to="keyArea" method="onBodyEntered"]
