@@ -34,3 +34,7 @@ func movePlayerToCheckPoint() -> void:
 func invertGravity() -> void:
 	p1.invertValues()
 	p2.invertValues()
+
+func movePlayerWithPlatform(speed) -> void:
+	p1.global_position += speed
+	p2.global_position += speed

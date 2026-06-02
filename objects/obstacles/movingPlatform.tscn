@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cad7cs8trheug"]
+
+[ext_resource type="Script" uid="uid://b0l3g1dercmvu" path="res://scripts/obstacles/movingPlatform.gd" id="1_qjcdd"]
+[ext_resource type="Texture2D" uid="uid://dl5jixny7h2u" path="res://assets/images/basic platform.png" id="1_uefcm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qjcdd"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ubv62"]
+size = Vector2(32, 20)
+
+[node name="MovingPlatform" type="Node2D" unique_id=427466028]
+script = ExtResource("1_qjcdd")
+
+[node name="platformBody" type="StaticBody2D" parent="." unique_id=642050021]
+
+[node name="platformSpr" type="Sprite2D" parent="platformBody" unique_id=226992950]
+texture = ExtResource("1_uefcm")
+
+[node name="platformCollision" type="CollisionShape2D" parent="platformBody" unique_id=697195496]
+shape = SubResource("RectangleShape2D_qjcdd")
+
+[node name="detector" type="Area2D" parent="." unique_id=1869236382]
+
+[node name="detectorCollision" type="CollisionShape2D" parent="detector" unique_id=725989659]
+position = Vector2(0, -26)
+shape = SubResource("RectangleShape2D_ubv62")
