@@ -8,17 +8,29 @@ var baseJumpForce: int = -270
 var canJump: bool = true
 
 func _ready() -> void:
-	invertValues()
+	startInvertedPlayer()
 
 func _physics_process(_delta: float) -> void:
 	applyGravity()
 	jump()
 	resolveAnimation()
 
-func invertValues() -> void:
+func startInvertedPlayer() -> void:
 	if inverted:
 		animation.flip_h = inverted
 		up_direction = Vector2.DOWN
+		baseGravity *= -1
+		baseJumpForce *= -1
+
+func invertValues() -> void:
+	if GameState.gravityInverted:
+		animation.flip_v = true
+		up_direction = Vector2.UP if inverted else Vector2.DOWN
+		baseGravity *= -1
+		baseJumpForce *= -1
+	else:
+		animation.flip_v = false
+		up_direction = Vector2.DOWN if inverted else Vector2.UP
 		baseGravity *= -1
 		baseJumpForce *= -1
 
@@ -29,10 +41,16 @@ func tryToMove(speed) -> void:
 func applyGravity() -> void:
 	if not is_on_floor():
 		velocity.y += baseGravity * 0.070
-		if inverted:
-			velocity.y = max(velocity.y, baseGravity)
+		if not GameState.gravityInverted:
+			if inverted:
+				velocity.y = max(velocity.y, baseGravity)
+			else:
+				velocity.y = min(velocity.y, baseGravity)
 		else:
-			velocity.y = min(velocity.y, baseGravity)
+			if inverted:
+				velocity.y = min(velocity.y, baseGravity)
+			else:
+				velocity.y = max(velocity.y, baseGravity)
 	else:
 		velocity.y = 0
 		canJump = true

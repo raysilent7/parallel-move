@@ -30,3 +30,7 @@ func _physics_process(_delta) -> void:
 func movePlayerToCheckPoint() -> void:
 	p1.global_position = GameState.lastCheckpointP1
 	p2.global_position = GameState.lastCheckpointP2
+
+func invertGravity() -> void:
+	p1.invertValues()
+	p2.invertValues()
