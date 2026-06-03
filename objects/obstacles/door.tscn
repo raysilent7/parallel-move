@@ -7,9 +7,65 @@
 atlas = ExtResource("1_ndsiw")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mndp2"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_e0sk0"]
+atlas = ExtResource("1_ndsiw")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fu0h"]
+atlas = ExtResource("1_ndsiw")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bju84"]
+atlas = ExtResource("1_ndsiw")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_opo1h"]
+atlas = ExtResource("1_ndsiw")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_400g4"]
+atlas = ExtResource("1_ndsiw")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ph470"]
 atlas = ExtResource("1_ndsiw")
 region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8h7hq"]
+atlas = ExtResource("1_ndsiw")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mndp2"]
+atlas = ExtResource("1_ndsiw")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k4k85"]
+atlas = ExtResource("1_ndsiw")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1ybve"]
+atlas = ExtResource("1_ndsiw")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbi0m"]
+atlas = ExtResource("1_ndsiw")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_06xau"]
+atlas = ExtResource("1_ndsiw")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4strc"]
+atlas = ExtResource("1_ndsiw")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6hdrl"]
+atlas = ExtResource("1_ndsiw")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gk8yq"]
+atlas = ExtResource("1_ndsiw")
+region = Rect2(192, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mndp2"]
 animations = [{
@@ -23,18 +79,70 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_e0sk0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0fu0h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bju84")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_opo1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_400g4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ph470")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8h7hq")
+}],
+"loop": false,
+"name": &"closing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_mndp2")
 }],
 "loop": true,
 "name": &"opened",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k4k85")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1ybve")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rbi0m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_06xau")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4strc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6hdrl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gk8yq")
+}],
+"loop": false,
+"name": &"opening",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k4k85"]
-size = Vector2(30, 32)
+size = Vector2(30, 63)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1ybve"]
-size = Vector2(21, 32)
+size = Vector2(21, 63)
 
 [node name="Door" type="Node2D" unique_id=55947173]
 script = ExtResource("1_ca14l")
@@ -42,15 +150,18 @@ script = ExtResource("1_ca14l")
 [node name="doorBody" type="StaticBody2D" parent="." unique_id=142852312]
 
 [node name="doorAnim" type="AnimatedSprite2D" parent="doorBody" unique_id=2042243660]
+position = Vector2(0, -15.5)
+scale = Vector2(1, 1.96875)
 sprite_frames = SubResource("SpriteFrames_mndp2")
-animation = &"closed"
+animation = &"opening"
 autoplay = "closed"
 
 [node name="bodyCollision" type="CollisionShape2D" parent="doorBody" unique_id=1445418803]
+position = Vector2(0, -15.5)
 shape = SubResource("RectangleShape2D_k4k85")
 
 [node name="doorArea" type="Area2D" parent="doorBody" unique_id=1986727320]
 
 [node name="detectionRange" type="CollisionShape2D" parent="doorBody/doorArea" unique_id=465625946]
-position = Vector2(-25.5, 0)
+position = Vector2(-25.5, -15.5)
 shape = SubResource("RectangleShape2D_1ybve")
