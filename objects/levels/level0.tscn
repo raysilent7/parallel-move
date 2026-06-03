@@ -69,6 +69,7 @@ rotation = 3.1415927
 position = Vector2(80, 320)
 pointA = Vector2(80, 320)
 pointB = Vector2(176, 320)
+speed = 0.5
 
 [node name="MovingPlatform2" parent="." unique_id=1211826550 instance=ExtResource("9_o626s")]
 position = Vector2(800, 272)

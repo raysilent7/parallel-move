@@ -2,23 +2,14 @@ extends CharacterBody2D
 
 @onready var animation: AnimatedSprite2D = $playerAnim
 @export var inverted: bool = false
-# Jujuba: Pegando as duas colisões pra poder trocar depois
 @onready var playerCollision = $playerCollision
 @onready var playerCollision2 = $playerCollision2
 
-
-
 var baseGravity: int = 300
-# Jujuba: Mudei a força de -270 para -274 para o boneco pular exatos 32 pixels de altura.
-	# Como o Godot atualiza a física 60 vezes por segundo (60 FPS), o cálculo é:
-		# Uma força inicial de 274 lutando contra o peso da gravidade (21 por frame) faz o 
-		# personagem subir por cerca de 14 frames. A soma dessa distância dá os 32 pixels.
 var baseJumpForce: int = -274
 var canJump: bool = true
-# Jujuba: Variáveis para o sistema de empurrar/puxar caixas
 var isHoldingBox: bool = false
 var isPullingBox: bool = false
-# Jujuba: Guarda a identidade da caixa que está sendo segurada no momento
 var heldBox: Node2D = null
 
 func _ready() -> void:
@@ -125,7 +116,6 @@ func resolveAnimation() -> void:
 				animation.play_backwards("moving box") # Toca de trás pra frente se for puxão!
 			else:
 				animation.play("moving box") # Toca normal se for empurrão
-		# -------------------------------------------
 		
 		elif Input.get_axis("left", "right") == 0:
 			animation.play("idle")

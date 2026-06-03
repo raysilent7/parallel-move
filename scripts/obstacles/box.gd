@@ -1,33 +1,23 @@
 extends Node2D
 
-# Jujuba: Puxando as referências dos nós físicos lá da árvore do Godot
 @onready var boxBody: CharacterBody2D = $boxBody
 @onready var boxArea: Area2D = $boxBody/boxArea
 
-# Jujuba: Variáveis para o jogo saber se o player está perto e "quem" é ele
 var playerInside: bool = false
 var playerNode: CharacterBody2D = null
-
-# Jujuba: Configurações de peso da caixa e a velocidade que ela se move ao ser empurrada
 var baseGravity: int = 300
-var pushSpeed: int = 40 
+var pushSpeed: int = 40
 
 func _ready() -> void:
-	# Jujuba: Assim que o jogo liga, conectamos os alarmes da área de detecção.
-	# Eles vão gritar "Entrou!" ou "Saiu!" sempre que algo encostar na caixa.
 	boxArea.body_entered.connect(onBodyEntered)
 	boxArea.body_exited.connect(onBodyExited)
 
 func _physics_process(_delta: float) -> void:
-	# Jujuba: GRAVIDADE DA CAIXA
-	# Se a caixa não estiver pisando no chão, empurra ela pra baixo pra ela cair pesada.
 	if not boxBody.is_on_floor():
 		boxBody.velocity.y += baseGravity * 0.070
 	else:
 		boxBody.velocity.y = 0
 
-	# Jujuba: INÍCIO DA INTERAÇÃO
-	# Só entra aqui se existir um player por perto E ele estiver segurando o botão de interagir
 	if playerNode and Input.is_action_pressed("interact"):
 		
 		# Jujuba: 1. PARA ONDE O PLAYER OLHA?
@@ -44,16 +34,16 @@ func _physics_process(_delta: float) -> void:
 		
 		# Jujuba: 3. O ENCARAR
 		# Só dá "True" se o boneco estiver olhando diretamente pra mesma direção onde a caixa está
-		var olhandoPraMim = (playerFacing == dirToBox)
+		var isFacingBox = (playerFacing == dirToBox)
 		
 		# Jujuba: 4. A TRAVA DE ALVO (TARGET LOCK)
 		# Checa se o player tá livre pra agarrar essa caixa de frente, ou se ele JÁ estava agarrado nela antes
-		var podeIniciarGarra = (playerInside and olhandoPraMim and playerNode.heldBox == null)
-		var jaEstaSegurandoMim = (playerNode.heldBox == self)
+		var canGrabTheBox = (playerInside and isFacingBox and playerNode.heldBox == null)
+		var isAlreadyHolding = (playerNode.heldBox == self)
 
 		# Jujuba: O EMPURRÃO / PUXÃO
 		# Se a trava de alvo permitiu, a gente assume o controle do Player!
-		if podeIniciarGarra or jaEstaSegurandoMim:
+		if canGrabTheBox or isAlreadyHolding:
 			# Avisa pro código do player que a caixa oficial dele agora é esta
 			playerNode.heldBox = self
 			playerNode.isHoldingBox = true
@@ -93,36 +83,24 @@ func _physics_process(_delta: float) -> void:
 			if not playerInside and playerNode.heldBox == null:
 				playerNode = null
 				
-		# Zera a velocidade pra caixa parar de deslizar
 		boxBody.velocity.x = 0
 
-	# Jujuba: Manda o motor físico do Godot aplicar todas essas velocidades de vez!
 	boxBody.move_and_slide()
 
 
-# Jujuba: ALARMES DE ENTRADA E SAÍDA DA ÁREA VERMELHA
 func onBodyEntered(body: Node2D) -> void:
-	# Se alguém encostou, e esse alguém é o personagem, salva ele na memória!
 	if body is CharacterBody2D and body.name != "boxBody":
 		playerInside = true
 		playerNode = body
 
 func onBodyExited(body: Node2D) -> void:
-	# Se o personagem saiu, avisa que ele não tá mais dentro
 	if body is CharacterBody2D and body.name != "boxBody":
 		playerInside = false
-		# Se ele saiu andando (sem segurar a caixa), limpa ele da memória pra não dar erro
 		if playerNode and playerNode.heldBox != self:
 			playerNode = null
 
-
-# --- LÓGICA DA PLATAFORMA MÓVEL ---
-# Jujuba: O SISTEMA DE CARONA (ÔNIBUS)
-# A plataforma chama essa função. A caixa obedece e anda junto com ela.
 func movePlayerWithPlatform(moveSpeed: Vector2) -> void:
 	boxBody.global_position += moveSpeed
 	
-	# Jujuba: Se o player estiver pisando em cima da caixa enquanto a plataforma anda,
-	# a caixa passa a carona adiante e carrega o corpo dele nas costas!
 	if playerInside and playerNode:
-		playerNode.global_position += moveSpeed
+		playerNode.get_parent().movePlayerWithPlatform(moveSpeed)
