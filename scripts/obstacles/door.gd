@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 @onready var doorArea: Area2D = $doorBody/doorArea
 @onready var doorCollision: CollisionShape2D = $doorBody/bodyCollision
@@ -8,6 +8,7 @@ var playerInside: bool = false
 
 func _ready() -> void:
 	doorArea.body_entered.connect(onBodyEntered)
+	doorArea.body_exited.connect(onBodyExited)
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("interact") and playerInside and GameState.hasKey:
