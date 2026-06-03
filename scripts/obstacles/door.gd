@@ -23,10 +23,10 @@ func _process(_delta: float) -> void:
 
 	if not GameState.buttonPressed and isOpen:
 		isOpen = false
+		doorCollision.disabled = false
 		doorAnim.play("closing")
 		await doorAnim.animation_finished
 		doorAnim.play("closed")
-		doorCollision.disabled = false
 
 func onBodyEntered(body: Node2D) -> void:
 	if body is CharacterBody2D:
