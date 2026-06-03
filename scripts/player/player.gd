@@ -2,10 +2,24 @@ extends CharacterBody2D
 
 @onready var animation: AnimatedSprite2D = $playerAnim
 @export var inverted: bool = false
+# Jujuba: Pegando as duas colisões pra poder trocar depois
+@onready var playerCollision = $playerCollision
+@onready var playerCollision2 = $playerCollision2
+
+
 
 var baseGravity: int = 300
-var baseJumpForce: int = -270
+# Jujuba: Mudei a força de -270 para -274 para o boneco pular exatos 32 pixels de altura.
+	# Como o Godot atualiza a física 60 vezes por segundo (60 FPS), o cálculo é:
+		# Uma força inicial de 274 lutando contra o peso da gravidade (21 por frame) faz o 
+		# personagem subir por cerca de 14 frames. A soma dessa distância dá os 32 pixels.
+var baseJumpForce: int = -274
 var canJump: bool = true
+# Jujuba: Variáveis para o sistema de empurrar/puxar caixas
+var isHoldingBox: bool = false
+var isPullingBox: bool = false
+# Jujuba: Guarda a identidade da caixa que está sendo segurada no momento
+var heldBox: Node2D = null
 
 func _ready() -> void:
 	startInvertedPlayer()
@@ -35,8 +49,13 @@ func invertValues() -> void:
 		baseJumpForce *= -1
 
 func tryToMove(speed) -> void:
+	var estavaNoAr = not is_on_floor()
+	
 	velocity.x = speed
 	move_and_slide()
+	
+	if estavaNoAr and is_on_floor():
+		animation.play("landing")
 
 func applyGravity() -> void:
 	if not is_on_floor():
@@ -61,13 +80,54 @@ func jump() -> void:
 		canJump = false
 
 func resolveAnimation() -> void:
-	if Input.get_axis("left", "right") == 0 and is_on_floor():
-		animation.play("idle")
-	elif Input.get_axis("left", "right") > 0:
-		animation.play("walking")
-		animation.flip_h = true if inverted else false
-	elif Input.get_axis("left", "right") < 0:
-		animation.play("walking")
-		animation.flip_h = false if inverted else true
+	# Jujuba: Se a aterrissagem estiver rolando, trava as outras animações até ela terminar
+	if animation.animation == "landing" and animation.is_playing():
+		return
+
+	# Jujuba: Se estiver no chão, segurando para baixo, e NÃO estiver segurando a caixa
+	if Input.is_action_pressed("down") and is_on_floor() and not isHoldingBox:
+		playerCollision.set_deferred("disabled", true)
+		playerCollision2.set_deferred("disabled", false)
+		
+		# Jujuba: Checa se o boneco está parado agachado ou andando agachado
+		if Input.get_axis("left", "right") == 0:
+			animation.play("crouching")
+		elif Input.get_axis("left", "right") > 0:
+			animation.play("crouch walking")
+			animation.flip_h = true if inverted else false
+		elif Input.get_axis("left", "right") < 0:
+			animation.play("crouch walking")
+			animation.flip_h = false if inverted else true
+			
 	else:
-		animation.play("jumping")
+		# Jujuba: Qualquer outra coisa que o boneco fizer, garante que a colisão normal volte a ficar ativada
+		playerCollision.set_deferred("disabled", false)
+		playerCollision2.set_deferred("disabled", true)
+		
+		# Jujuba: Só vira o boneco livremente se ele NÃO estiver segurando a caixa
+		if not isHoldingBox:
+			if Input.get_axis("left", "right") > 0:
+				animation.flip_h = true if inverted else false
+			elif Input.get_axis("left", "right") < 0:
+				animation.flip_h = false if inverted else true
+			
+		# Jujuba: Escolhe a animação certa checando o pulo primeiro. 
+		# Sem essa alteração, dava aquele bug do boneco não tocar a animação de pulo enquanto pulava em alguma direção.
+		if not is_on_floor():
+			animation.play("jumping")
+			
+		# Jujuba: --- LÓGICA DE ANIMAÇÃO DA CAIXA ---
+		# Se ele estiver segurando a caixa, assume o controle das animações de braço
+		elif isHoldingBox:
+			if Input.get_axis("left", "right") == 0:
+				animation.play("holding box") # Parado segurando a caixa
+			elif isPullingBox:
+				animation.play_backwards("moving box") # Toca de trás pra frente se for puxão!
+			else:
+				animation.play("moving box") # Toca normal se for empurrão
+		# -------------------------------------------
+		
+		elif Input.get_axis("left", "right") == 0:
+			animation.play("idle")
+		else:
+			animation.play("walking")

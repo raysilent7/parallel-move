@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://iwh8x54a7k7a"]
+
+[ext_resource type="Script" uid="uid://cnsmbprc7p5w3" path="res://scripts/obstacles/box.gd" id="1_23jsl"]
+[ext_resource type="Texture2D" uid="uid://cqa2ggmp5w1sx" path="res://assets/images/box.png" id="2_gnq7n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k4k85"]
+size = Vector2(30, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ybve"]
+size = Vector2(36, 5.25)
+
+[node name="Box" type="Node2D" unique_id=55947173]
+script = ExtResource("1_23jsl")
+
+[node name="boxBody" type="CharacterBody2D" parent="." unique_id=981969375]
+
+[node name="box2D" type="Sprite2D" parent="boxBody" unique_id=1044803690]
+texture = ExtResource("2_gnq7n")
+
+[node name="bodyCollision" type="CollisionShape2D" parent="boxBody" unique_id=1445418803]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_k4k85")
+
+[node name="boxArea" type="Area2D" parent="boxBody" unique_id=1986727320]
+
+[node name="detectionRange" type="CollisionShape2D" parent="boxBody/boxArea" unique_id=465625946]
+position = Vector2(0, -0.625)
+shape = SubResource("RectangleShape2D_1ybve")
+debug_color = Color(1, 0.43327782, 0.37898448, 0.41960785)
