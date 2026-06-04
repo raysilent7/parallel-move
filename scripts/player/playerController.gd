@@ -4,23 +4,17 @@ extends Node2D
 @onready var p2 = $playerBody2
 
 var baseSpeed: int = 100
+var upSpeed: int = 50
 
 func _ready() -> void:
 	GameState.lastCheckpointP1 = p1.global_position
 	GameState.lastCheckpointP2 = p2.global_position
 
 func _physics_process(_delta) -> void:
-	# Jujuba: Se os dois chegarem muito perto, o p2 consome o p1
-	if p1.global_position.distance_to(p2.global_position) < 35:
-		p1.animation.play("consumed")
-		p2.animation.play("consuming")
-		p1.set_physics_process(false)
-		p2.set_physics_process(false)
-		set_physics_process(false)
-		return
-
 	var inputDir = Input.get_axis("left", "right")
+	var inputUp = Input.get_axis("up", "down")
 	var xSpeed = inputDir * baseSpeed
+	var ySpeed = inputUp * upSpeed
 
 	# Jujuba: Se segurar para baixo, o boneco anda agachado, mas com metade da velocidade
 	if Input.is_action_pressed("down"):
@@ -35,7 +29,11 @@ func _physics_process(_delta) -> void:
 	else:
 		p1.tryToMove(xSpeed)
 		p2.tryToMove(xSpeed)
-
+	
+	if p1.canGoUp and p2.canGoUp and Input.is_action_just_pressed("up"):
+		p1.tryGoUp(ySpeed)
+		p2.tryGoUp(ySpeed*-1)
+		
 	# Jujuba: Sincroniza a posição X dos dois players para andarem perfeitamente alinhados
 	if p1.global_position.x > p2.global_position.x or p1.global_position.x < p2.global_position.x:
 		p1.global_position.x = p2.global_position.x
@@ -64,3 +62,19 @@ func movePlayerWithPlatform(speed) -> void:
 
 func getPlayerFacingDirection() -> String:
 	return p1.facingDirection
+
+func moveTo(destiny: Vector2, destiny2: Vector2) -> void:
+	p1.global_position = destiny
+	p2.global_position = destiny2
+
+func activateUpButton() -> void:
+	p1.canGoUp = true
+	p1.baseGravity = 0
+	p2.canGoUp = true
+	p2.baseGravity = 0
+
+func deactivateUpButton() -> void:
+	p1.canGoUp = false
+	p1.baseGravity = 274
+	p2.canGoUp = false
+	p2.baseGravity = -274

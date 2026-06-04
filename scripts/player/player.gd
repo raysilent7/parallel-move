@@ -14,6 +14,7 @@ var isPullingBox: bool = false
 var heldBox: Node2D = null
 var facingDirection: String
 var canShoot: bool = true
+var canGoUp: bool = false
 
 func _ready() -> void:
 	startInvertedPlayer()
@@ -25,6 +26,10 @@ func _physics_process(_delta: float) -> void:
 	applyGravity()
 	jump()
 	resolveAnimation()
+
+func tryGoUp(speed) -> void:
+	velocity.y = speed
+	move_and_slide()
 
 func shoot():
 	if Input.is_action_just_pressed("shoot") and canShoot:
@@ -60,12 +65,10 @@ func invertValues() -> void:
 		baseJumpForce *= -1
 
 func tryToMove(speed) -> void:
-	var estavaNoAr = not is_on_floor()
-	
 	velocity.x = speed
 	move_and_slide()
 	
-	if estavaNoAr and is_on_floor():
+	if not is_on_floor() and is_on_floor():
 		animation.play("landing")
 
 func applyGravity() -> void:
