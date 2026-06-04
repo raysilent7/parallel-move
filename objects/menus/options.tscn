@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://cjmhrq7nwpw5w"]
+
+[ext_resource type="Script" uid="uid://djt0nmi7a30pd" path="res://scripts/menus/options.gd" id="1_n43ho"]
+[ext_resource type="Texture2D" uid="uid://b88drgl1p8si1" path="res://assets/images/options.png" id="1_yqyi6"]
+[ext_resource type="FontFile" uid="uid://dk7dd0jbwn4lf" path="res://assets/others/ARCADECLASSIC.TTF" id="2_n43ho"]
+[ext_resource type="Texture2D" uid="uid://bugv2u7hrsg45" path="res://assets/images/point.png" id="3_rx6mi"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kx25o"]
+font = ExtResource("2_n43ho")
+font_size = 28
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yqyi6"]
+
+[node name="Options" type="Node2D" unique_id=130229835]
+script = ExtResource("1_n43ho")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1306881665]
+position = Vector2(567, 314)
+texture = ExtResource("1_yqyi6")
+
+[node name="Label" type="Label" parent="." unique_id=1492050141]
+offset_left = 509.0
+offset_top = 169.0
+offset_right = 640.0
+offset_bottom = 204.0
+text = "OPTIONS"
+label_settings = SubResource("LabelSettings_kx25o")
+
+[node name="Label2" type="Label" parent="." unique_id=2127638838]
+offset_left = 525.0
+offset_top = 228.0
+offset_right = 656.0
+offset_bottom = 263.0
+text = "MUSIC"
+label_settings = SubResource("LabelSettings_kx25o")
+
+[node name="Label3" type="Label" parent="." unique_id=386018088]
+offset_left = 514.0
+offset_top = 295.0
+offset_right = 645.0
+offset_bottom = 330.0
+text = "EFFECTS"
+label_settings = SubResource("LabelSettings_kx25o")
+
+[node name="Label4" type="Label" parent="." unique_id=1123646824]
+offset_left = 537.0
+offset_top = 394.0
+offset_right = 668.0
+offset_bottom = 429.0
+text = "EXIT"
+label_settings = SubResource("LabelSettings_kx25o")
+
+[node name="HSlider" type="HSlider" parent="." unique_id=612566016]
+offset_left = 411.0
+offset_top = 257.0
+offset_right = 725.0
+offset_bottom = 301.0
+theme_override_icons/grabber = ExtResource("3_rx6mi")
+theme_override_icons/grabber_highlight = ExtResource("3_rx6mi")
+theme_override_icons/grabber_disabled = ExtResource("3_rx6mi")
+theme_override_icons/tick = ExtResource("3_rx6mi")
+theme_override_styles/slider = SubResource("StyleBoxFlat_yqyi6")
+step = 10.0
+value = 100.0
+
+[node name="HSlider2" type="HSlider" parent="." unique_id=1167688417]
+offset_left = 411.0
+offset_top = 314.0
+offset_right = 725.0
+offset_bottom = 358.0
+theme_override_icons/grabber = ExtResource("3_rx6mi")
+theme_override_icons/grabber_highlight = ExtResource("3_rx6mi")
+theme_override_icons/grabber_disabled = ExtResource("3_rx6mi")
+theme_override_icons/tick = ExtResource("3_rx6mi")
+theme_override_styles/slider = SubResource("StyleBoxFlat_yqyi6")
+step = 10.0
+value = 100.0
