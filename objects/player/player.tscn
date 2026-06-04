@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://byju2mquwytmp" path="res://assets/images/charles.png" id="4_jnjyq"]
 [ext_resource type="Texture2D" uid="uid://bn6xv5uh8m2mi" path="res://assets/images/charles_walking.png" id="4_xkryw"]
 [ext_resource type="Texture2D" uid="uid://ba741x5a0d1xe" path="res://assets/images/charles_box_idling.png" id="5_psowp"]
+[ext_resource type="Texture2D" uid="uid://due7roi3pqmgl" path="res://assets/images/charles_death.png" id="6_c34wb"]
 [ext_resource type="Texture2D" uid="uid://ctfibm140gym" path="res://assets/images/charles_jumping.png" id="6_m4kly"]
 [ext_resource type="Texture2D" uid="uid://cvg54oww4vm8d" path="res://assets/images/charles_box_walking.png" id="8_45urx"]
 [ext_resource type="Texture2D" uid="uid://pvb66dqqyjmc" path="res://assets/images/notsogood_charles.png" id="9_xgwla"]
@@ -36,6 +37,18 @@ region = Rect2(0, 0, 48, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_45rsp"]
 atlas = ExtResource("3_xkryw")
 region = Rect2(48, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_no36w"]
+atlas = ExtResource("6_c34wb")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tk20p"]
+atlas = ExtResource("6_c34wb")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1g4tr"]
+atlas = ExtResource("6_c34wb")
+region = Rect2(128, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xlkbi"]
 atlas = ExtResource("5_psowp")
@@ -133,8 +146,17 @@ animations = [{
 "name": &"crouching",
 "speed": 5.0
 }, {
-"frames": [],
-"loop": true,
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_no36w")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_tk20p")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_1g4tr")
+}],
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -227,8 +249,10 @@ metadata/_edit_lock_ = true
 
 [node name="playerAnim" type="AnimatedSprite2D" parent="playerBody" unique_id=941827179]
 sprite_frames = SubResource("SpriteFrames_xgwla")
-animation = &"attack throwing"
+animation = &"death"
 autoplay = "idle"
+frame = 2
+frame_progress = 0.119646735
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="playerBody" unique_id=435134945]

@@ -18,7 +18,8 @@ func _physics_process(_delta: float) -> void:
 	else:
 		boxBody.velocity.y = 0
 
-	if playerNode and Input.is_action_pressed("interact"):
+	# Jujuba: Adicionamos o "heldBox" in playerNode aqui como armadura de segurança extra!
+	if playerNode and "heldBox" in playerNode and Input.is_action_pressed("interact"):
 		
 		# Jujuba: 1. PARA ONDE O PLAYER OLHA?
 		# Faz a matemática (levando em conta a gravidade invertida) pra descobrir o lado exato que o boneco olha
@@ -72,7 +73,7 @@ func _physics_process(_delta: float) -> void:
 	else:
 		# Jujuba: SOLTOU O BOTÃO OU FOI EMBORA
 		# Limpa a memória do player pra ele soltar a caixa e parar de fazer força
-		if playerNode:
+		if playerNode and "heldBox" in playerNode:
 			# Só limpa as variáveis se ELE for o dono dessa caixa específica
 			if playerNode.heldBox == self:
 				playerNode.heldBox = null
@@ -89,15 +90,20 @@ func _physics_process(_delta: float) -> void:
 
 
 func onBodyEntered(body: Node2D) -> void:
-	if body is CharacterBody2D and body.name != "boxBody":
+	# Jujuba: AQUI ESTÁ O SEGREDO! Agora a caixa só interage se for o Charles ou o Void.
+	# O Wobble vai pisar nela e nada vai acontecer.
+	if body.name == "playerBody" or body.name == "playerBody2":
 		playerInside = true
 		playerNode = body
 
+
 func onBodyExited(body: Node2D) -> void:
-	if body is CharacterBody2D and body.name != "boxBody":
+	# Só processa a saída se quem estiver saindo for um dos irmãos.
+	if body.name == "playerBody" or body.name == "playerBody2":
 		playerInside = false
-		if playerNode and playerNode.heldBox != self:
+		if playerNode and "heldBox" in playerNode and playerNode.heldBox != self:
 			playerNode = null
+
 
 func movePlayerWithPlatform(moveSpeed: Vector2) -> void:
 	boxBody.global_position += moveSpeed
