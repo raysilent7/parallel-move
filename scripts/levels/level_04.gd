@@ -5,6 +5,7 @@ extends Node2D
 @onready var darkness: CanvasModulate = $darkness
 
 func _ready() -> void:
+	AudioManager.startMusicSystem()
 	GameState.hasKey = false
 	GameState.isDark = darkness.visible
 	if GameState.isDark:

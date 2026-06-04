@@ -387,11 +387,6 @@ visible = false
 color = Color(0, 0, 0, 1)
 metadata/_edit_lock_ = true
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=384787663]
-stream = ExtResource("19_rx7bq")
-volume_db = -13.866
-autoplay = true
-
 [node name="Garra" type="Node2D" parent="." unique_id=1485664581]
 
 [node name="Mecha" parent="Garra" unique_id=1257056170 node_paths=PackedStringArray("point_a", "point_b") instance=ExtResource("13_hxns0")]
