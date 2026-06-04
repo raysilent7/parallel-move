@@ -13,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://bejq6gqnthow8" path="res://objects/scenario/mecha.tscn" id="13_hxns0"]
 [ext_resource type="Texture2D" uid="uid://bb5tnyytx44mr" path="res://assets/images/light texture.png" id="14_twroo"]
 [ext_resource type="PackedScene" uid="uid://qh6icqodvqpv" path="res://objects/scenario/steel.tscn" id="18_ukchq"]
-[ext_resource type="AudioStream" uid="uid://bf5oea2xs8p1x" path="res://assets/sounds/Clockwork Utopia.mp3" id="19_rx7bq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x56sq"]
 texture = ExtResource("3_6d80i")
@@ -387,11 +386,6 @@ texture = ExtResource("14_twroo")
 visible = false
 color = Color(0, 0, 0, 1)
 metadata/_edit_lock_ = true
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=384787663]
-stream = ExtResource("19_rx7bq")
-volume_db = -13.866
-autoplay = true
 
 [node name="Garra" type="Node2D" parent="." unique_id=1485664581]
 

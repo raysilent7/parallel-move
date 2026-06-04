@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://dmv62imm4wmj4"]
 
+[ext_resource type="Script" uid="uid://bbm1u07xdcw0b" path="res://scripts/menus/menuMinigame.gd" id="1_8go1b"]
 [ext_resource type="Script" uid="uid://bnrmwp8nyqts0" path="res://scripts/menus/mainMenu.gd" id="1_8ohc5"]
 [ext_resource type="Texture2D" uid="uid://dvwfnckttbccn" path="res://assets/images/basic bg.jpg" id="1_8ujjd"]
 [ext_resource type="TileSet" uid="uid://gel5y1s217bn" path="res://assets/images/basic.tres" id="2_yajry"]
@@ -22,6 +23,7 @@ size = Vector2(37.5, 138)
 size = Vector2(4, 86)
 
 [node name="MainMenu" type="Node2D" unique_id=2071481827]
+script = ExtResource("1_8go1b")
 
 [node name="minigame" type="Node2D" parent="." unique_id=977704423]
 

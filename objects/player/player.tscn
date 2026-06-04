@@ -24,11 +24,6 @@
 [ext_resource type="Texture2D" uid="uid://dbjbyqnbvv6u2" path="res://assets/images/void_jumping.png" id="10_y35q5"]
 [ext_resource type="Texture2D" uid="uid://c4jweeavxarhn" path="res://assets/images/void_box_walking.png" id="11_no36w"]
 [ext_resource type="Texture2D" uid="uid://bmk6yp7vvhtwy" path="res://assets/images/void_walking.png" id="12_tk20p"]
-[ext_resource type="AudioStream" uid="uid://bu2tmgedr4ns4" path="res://assets/sounds/throw.mp3" id="15_ylcck"]
-[ext_resource type="AudioStream" uid="uid://bn8v86wcvvr80" path="res://assets/sounds/jumping.mp3" id="16_dthqj"]
-[ext_resource type="AudioStream" uid="uid://baymq6e86u8du" path="res://assets/sounds/walking.mp3" id="17_28utn"]
-[ext_resource type="AudioStream" uid="uid://cthbea7brk7qh" path="res://assets/sounds/dragging box.mp3" id="17_l55sg"]
-[ext_resource type="AudioStream" uid="uid://6184lmmgvj0h" path="res://assets/sounds/landing.mp3" id="17_xlkbi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r5k7d"]
 atlas = ExtResource("3_45urx")
@@ -706,26 +701,6 @@ shape = SubResource("CapsuleShape2D_g7ett")
 [node name="playerCollision2" type="CollisionShape2D" parent="playerBody" unique_id=202215776]
 position = Vector2(-1, 10)
 shape = SubResource("CapsuleShape2D_xkryw")
-
-[node name="Sounds" type="Node" parent="playerBody" unique_id=1180786051]
-
-[node name="Shoot" type="AudioStreamPlayer2D" parent="playerBody/Sounds" unique_id=1410715642]
-stream = ExtResource("15_ylcck")
-
-[node name="Jump" type="AudioStreamPlayer2D" parent="playerBody/Sounds" unique_id=1554868693]
-stream = ExtResource("16_dthqj")
-
-[node name="Land" type="AudioStreamPlayer2D" parent="playerBody/Sounds" unique_id=1457653605]
-stream = ExtResource("17_xlkbi")
-
-[node name="Walk" type="AudioStreamPlayer2D" parent="playerBody/Sounds" unique_id=592054647]
-stream = ExtResource("17_28utn")
-volume_db = 3.759
-
-[node name="MoveBox" type="AudioStreamPlayer2D" parent="playerBody/Sounds" unique_id=269665341]
-stream = ExtResource("17_l55sg")
-
-[node name="Death" type="AudioStreamPlayer2D" parent="playerBody/Sounds" unique_id=598729024]
 
 [node name="playerBody2" type="CharacterBody2D" parent="." unique_id=1044717490]
 position = Vector2(0, 96)

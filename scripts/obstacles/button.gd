@@ -10,20 +10,20 @@ func _ready() -> void:
 
 func onBodyEntered(body: Node2D) -> void:
 	if body is CharacterBody2D:
-		atualizar_estado_botao()
+		updateButtonState()
 
 func onBodyExited(body: Node2D) -> void:
 	if body is CharacterBody2D:
-		atualizar_estado_botao()
+		updateButtonState()
 
-func atualizar_estado_botao() -> void:
-	var corpos_no_botao: int = 0
+func updateButtonState() -> void:
+	var bodiesInside: int = 0
 	
 	for b in buttonArea.get_overlapping_bodies():
 		if b is CharacterBody2D:
-			corpos_no_botao += 1
+			bodiesInside += 1
 			
-	if corpos_no_botao > 0:
+	if bodiesInside > 0:
 		GameState.buttonPressed = true
 		buttonAnim.play("pressed")
 	else:

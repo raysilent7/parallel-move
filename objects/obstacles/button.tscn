@@ -40,7 +40,7 @@ script = ExtResource("1_s6sgu")
 [node name="buttonAnim" type="AnimatedSprite2D" parent="." unique_id=1115243758]
 position = Vector2(0, -14)
 sprite_frames = SubResource("SpriteFrames_ymdfb")
-animation = &"pressed"
+animation = &"unpressed"
 autoplay = "unpressed"
 
 [node name="buttonArea" type="Area2D" parent="." unique_id=714191022]

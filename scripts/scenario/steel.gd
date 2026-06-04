@@ -1,10 +1,7 @@
 extends Node2D
 
-
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var particles: GPUParticles2D = $GPUParticles2D
-@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D 
-
 
 @export var min_speed: float = 1.0     
 @export var max_speed: float = 2.5     
@@ -37,8 +34,7 @@ func choose_next_action() -> void:
 			target_speed = 0.0
 			if particles:
 				particles.emitting = false
-			if audio_player:
-				audio_player.stop() 
+			AudioManager.stopSteamLeak()
 			
 		1, 2:
 			if random_choice == 1:
@@ -48,8 +44,7 @@ func choose_next_action() -> void:
 			
 			if particles:
 				particles.emitting = true
-				
-			if audio_player and not audio_player.playing:
-				audio_player.play()
+
+			AudioManager.playSteamLeak()
 			
 	action_timer = randf_range(min_duration, max_duration)

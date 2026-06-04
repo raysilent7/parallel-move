@@ -15,18 +15,8 @@ var heldBox: Node2D = null
 var facingDirection: String
 var canShoot: bool = true
 var canGoUp: bool = false
-
 var isHoldingKeyAnim: bool = false
-
-@onready var snd_shoot: AudioStreamPlayer2D = $Sounds/Shoot
-@onready var snd_jump: AudioStreamPlayer2D = $Sounds/Jump
-@onready var snd_land: AudioStreamPlayer2D = $Sounds/Land
-@onready var snd_walk: AudioStreamPlayer2D = $Sounds/Walk
-@onready var snd_crouch: AudioStreamPlayer2D = $Sounds/CrouchWalk
-@onready var snd_box: AudioStreamPlayer2D = $Sounds/MoveBox
-@onready var snd_death: AudioStreamPlayer2D = $Sounds/Death
-
-var was_on_floor: bool = true
+var wasOnFloor: bool = true
 
 func _ready() -> void:
 	startInvertedPlayer()
@@ -43,17 +33,18 @@ func _physics_process(_delta: float) -> void:
 	applyGravity()
 	jump()
 	resolveAnimation()
+	resolveAudio()
 
 func tryGoUp(speed) -> void:
 	if isHoldingKeyAnim: return
 	velocity.y = speed
 	move_and_slide()
-	check_landing_physics()
+	checkLandingPhysics()
 
 func shoot():
 	if Input.is_action_just_pressed("shoot") and canShoot:
 		animation.play("attack throwing")
-		if snd_shoot: snd_shoot.play()
+		AudioManager.playThrow()
 		await animation.animation_finished
 		var projectile = projectileScene.instantiate()
 		projectile.global_position = global_position
@@ -92,13 +83,13 @@ func tryToMove(speed) -> void:
 
 	velocity.x = speed
 	move_and_slide()
-	check_landing_physics()
+	checkLandingPhysics()
 
-func check_landing_physics() -> void:
-	if is_on_floor() and not was_on_floor:
+func checkLandingPhysics() -> void:
+	if is_on_floor() and not wasOnFloor:
 		animation.play("landing")
-		if snd_land: snd_land.play()
-	was_on_floor = is_on_floor()
+		AudioManager.playLanding()
+	wasOnFloor = is_on_floor()
 
 func applyGravity() -> void:
 	if not is_on_floor():
@@ -117,25 +108,12 @@ func jump() -> void:
 	if Input.is_action_just_pressed("jump") and canJump:
 		velocity.y = baseJumpForce
 		canJump = false
-		if snd_jump: snd_jump.play()
-
-func manage_loop_sound(active_sound: AudioStreamPlayer2D) -> void:
-	var loops = [snd_walk, snd_crouch, snd_box]
-	for snd in loops:
-		if snd and snd != active_sound:
-			snd.stop()
-	if active_sound and not active_sound.playing:
-		active_sound.play()
-
-func play_death_sound() -> void:
-	manage_loop_sound(null)
-	if snd_death: snd_death.play()
+		AudioManager.playJumping()
 
 func resolveAnimation() -> void:
 	if (animation.animation == "landing" and animation.is_playing()) or \
 	   (animation.animation == "attack throwing" and animation.is_playing()) or \
 	   (animation.animation == "holding key" and animation.is_playing()):
-		manage_loop_sound(null)
 		return
 
 	if Input.is_action_pressed("down") and is_on_floor() and not isHoldingBox:
@@ -144,18 +122,14 @@ func resolveAnimation() -> void:
 		
 		if Input.get_axis("left", "right") == 0:
 			animation.play("crouching")
-			manage_loop_sound(null)
 		elif Input.get_axis("left", "right") > 0:
 			animation.play("crouch walking")
 			animation.flip_h = true if inverted else false
 			facingDirection = "right"
-			manage_loop_sound(snd_crouch)
 		elif Input.get_axis("left", "right") < 0:
 			animation.play("crouch walking")
 			animation.flip_h = false if inverted else true
 			facingDirection = "left"
-			manage_loop_sound(snd_crouch)
-			
 	else:
 		playerCollision.set_deferred("disabled", false)
 		playerCollision2.set_deferred("disabled", true)
@@ -170,22 +144,22 @@ func resolveAnimation() -> void:
 
 		if not is_on_floor():
 			animation.play("jumping")
-			manage_loop_sound(null)
 			
 		elif isHoldingBox:
 			if Input.get_axis("left", "right") == 0:
 				animation.play("holding box")
-				manage_loop_sound(null)
 			elif isPullingBox:
 				animation.play_backwards("moving box")
-				manage_loop_sound(snd_box)
 			else:
 				animation.play("moving box")
-				manage_loop_sound(snd_box)
 		
 		elif Input.get_axis("left", "right") == 0:
 			animation.play("idle")
-			manage_loop_sound(null)
 		else:
 			animation.play("walking")
-			manage_loop_sound(snd_walk)
+
+func resolveAudio():
+	if animation.animation.begins_with("walking") or animation.animation.begins_with("crouch"):
+		AudioManager.playWalking()
+	if animation.animation.begins_with("moving box"):
+		AudioManager.playDragginBox()

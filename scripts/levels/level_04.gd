@@ -10,6 +10,7 @@ extends Node2D
 @onready var p2 = $Player/playerBody2
 
 func _ready() -> void:
+	AudioManager.startMusicSystem()
 	GameState.hasKey = false
 	GameState.isDark = darkness.visible
 	light.enabled = GameState.isDark
