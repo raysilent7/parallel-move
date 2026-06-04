@@ -22,7 +22,7 @@ func _process(_delta: float) -> void:
 	if isOpen and doorAnim.animation.begins_with("opening"):
 		doorAnim.play("opened")
 
-	if not GameState.buttonPressed and isOpen and not isTransitioning:
+	if not GameState.buttonPressed and isOpen and not isTransitioning and not hasDoorLock:
 		isTransitioning = true
 		isOpen = false
 		doorCollision.disabled = false
