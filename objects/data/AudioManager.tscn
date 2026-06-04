@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://cl1l35d5v2iyk" path="res://assets/sounds/walking.ogg" id="9_fqpqt"]
 [ext_resource type="AudioStream" uid="uid://cifsr5wp8ky55" path="res://assets/sounds/wobble bounce.mp3" id="10_3j4lv"]
 [ext_resource type="AudioStream" uid="uid://bd3gw7x2yfy6y" path="res://assets/sounds/Production=Life.mp3" id="11_fqpqt"]
+[ext_resource type="AudioStream" uid="uid://wv5ur1woas77" path="res://assets/sounds/steam leak.mp3" id="12_eis3r"]
 
 [node name="AudioManager" type="Node2D" unique_id=1932207776]
 script = ExtResource("1_1ys02")
@@ -45,3 +46,6 @@ stream = ExtResource("10_3j4lv")
 
 [node name="music1" type="AudioStreamPlayer2D" parent="." unique_id=787067234]
 stream = ExtResource("11_fqpqt")
+
+[node name="steamLeak" type="AudioStreamPlayer2D" parent="." unique_id=1398815568]
+stream = ExtResource("12_eis3r")
