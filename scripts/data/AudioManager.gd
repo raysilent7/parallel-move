@@ -2,6 +2,7 @@ extends Node
 
 @onready var walk: AudioStreamPlayer2D = $walking
 @onready var dragginBox: AudioStreamPlayer2D = $dragginBox
+@onready var steamLeak: AudioStreamPlayer2D = $steamLeak
 
 var silenceMin: int = 20
 var silenceMax: int = 30
@@ -130,3 +131,10 @@ func playWalking():
 
 func playWobble():
 	$wobble.play()
+
+func playSteamLeak():
+	if not steamLeak.playing:
+		steamLeak.play()
+
+func stopSteamLeak():
+	steamLeak.stop()

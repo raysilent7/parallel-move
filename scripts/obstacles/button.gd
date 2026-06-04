@@ -6,6 +6,7 @@ extends Node2D
 func _ready() -> void:
 	buttonArea.body_entered.connect(onBodyEntered)
 	buttonArea.body_exited.connect(onBodyExited)
+	buttonAnim.play("unpressed")
 
 func onBodyEntered(body: Node2D) -> void:
 	if body is CharacterBody2D:

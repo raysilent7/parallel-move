@@ -17,7 +17,7 @@ func _ready() -> void:
 			directionMultiplier = 1.0
 		else:
 			directionMultiplier = -1.0
-			
+
 			for child in get_children():
 				if child is Sprite2D or child is AnimatedSprite2D:
 					child.flip_h = true
@@ -31,7 +31,7 @@ func _process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body.name == "playerBody" or body.name == "playerBody2":
 		return
-		
+
 	if body.is_in_group("wobbles"):
 		if "hp" in body:
 			body.hp -= 1
@@ -40,5 +40,5 @@ func _on_body_entered(body: Node2D) -> void:
 			if body.hp <= 0:
 				print("Wobble eliminado!")
 				body.queue_free()
-				
+
 	queue_free()
