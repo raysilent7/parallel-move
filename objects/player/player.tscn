@@ -115,7 +115,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_y35q5")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack throwing",
 "speed": 5.0
 }, {
@@ -249,7 +249,7 @@ metadata/_edit_lock_ = true
 
 [node name="playerAnim" type="AnimatedSprite2D" parent="playerBody" unique_id=941827179]
 sprite_frames = SubResource("SpriteFrames_xgwla")
-animation = &"death"
+animation = &"idle"
 autoplay = "idle"
 frame = 2
 frame_progress = 0.119646735
