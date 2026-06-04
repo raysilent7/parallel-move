@@ -16,10 +16,8 @@ var facingDirection: String
 var canShoot: bool = true
 var canGoUp: bool = false
 
-# Jujuba: Nova variável para trancar o Charles no modo "Zelda" ao pegar a chave
 var isHoldingKeyAnim: bool = false
 
-# 🎵 JUJUBA: Referências de todos os nós de efeitos sonoros
 @onready var snd_shoot: AudioStreamPlayer2D = $Sounds/Shoot
 @onready var snd_jump: AudioStreamPlayer2D = $Sounds/Jump
 @onready var snd_land: AudioStreamPlayer2D = $Sounds/Land
@@ -28,7 +26,6 @@ var isHoldingKeyAnim: bool = false
 @onready var snd_box: AudioStreamPlayer2D = $Sounds/MoveBox
 @onready var snd_death: AudioStreamPlayer2D = $Sounds/Death
 
-# Rastreador físico para detectar aterrissagem legítima
 var was_on_floor: bool = true
 
 func _ready() -> void:
@@ -56,7 +53,7 @@ func tryGoUp(speed) -> void:
 func shoot():
 	if Input.is_action_just_pressed("shoot") and canShoot:
 		animation.play("attack throwing")
-		if snd_shoot: snd_shoot.play() # 🎵 Som: Atirar
+		if snd_shoot: snd_shoot.play()
 		await animation.animation_finished
 		var projectile = projectileScene.instantiate()
 		projectile.global_position = global_position
@@ -97,11 +94,10 @@ func tryToMove(speed) -> void:
 	move_and_slide()
 	check_landing_physics()
 
-# 🧠 JUJUBA: Nova função centralizada que gerencia o impacto no chão corretamente
 func check_landing_physics() -> void:
 	if is_on_floor() and not was_on_floor:
 		animation.play("landing")
-		if snd_land: snd_land.play() # 🎵 Som: Aterrissar
+		if snd_land: snd_land.play()
 	was_on_floor = is_on_floor()
 
 func applyGravity() -> void:
@@ -121,9 +117,8 @@ func jump() -> void:
 	if Input.is_action_just_pressed("jump") and canJump:
 		velocity.y = baseJumpForce
 		canJump = false
-		if snd_jump: snd_jump.play() # 🎵 Som: Pular
+		if snd_jump: snd_jump.play()
 
-# 🧠 JUJUBA: Função de suporte para ligar o áudio contínuo certo e desligar os outros
 func manage_loop_sound(active_sound: AudioStreamPlayer2D) -> void:
 	var loops = [snd_walk, snd_crouch, snd_box]
 	for snd in loops:
@@ -132,37 +127,34 @@ func manage_loop_sound(active_sound: AudioStreamPlayer2D) -> void:
 	if active_sound and not active_sound.playing:
 		active_sound.play()
 
-# 🧠 JUJUBA: Função pública para o seu Controller disparar a morte do Charles com áudio
 func play_death_sound() -> void:
-	manage_loop_sound(null) # Para qualquer som de passos ativo
-	if snd_death: snd_death.play() # 🎵 Som: Morrer
+	manage_loop_sound(null)
+	if snd_death: snd_death.play()
 
 func resolveAnimation() -> void:
-	# Se travas de animação de ação estiverem rolando, corta sons de passos e sai
 	if (animation.animation == "landing" and animation.is_playing()) or \
 	   (animation.animation == "attack throwing" and animation.is_playing()) or \
 	   (animation.animation == "holding key" and animation.is_playing()):
 		manage_loop_sound(null)
 		return
 
-	# Se estiver no chão, segurando para baixo, e NÃO estiver segurando a caixa
 	if Input.is_action_pressed("down") and is_on_floor() and not isHoldingBox:
 		playerCollision.set_deferred("disabled", true)
 		playerCollision2.set_deferred("disabled", false)
 		
 		if Input.get_axis("left", "right") == 0:
 			animation.play("crouching")
-			manage_loop_sound(null) # 🎵 Som: Parado agachado (Silêncio)
+			manage_loop_sound(null)
 		elif Input.get_axis("left", "right") > 0:
 			animation.play("crouch walking")
 			animation.flip_h = true if inverted else false
 			facingDirection = "right"
-			manage_loop_sound(snd_crouch) # 🎵 Som: Passos Agachado
+			manage_loop_sound(snd_crouch)
 		elif Input.get_axis("left", "right") < 0:
 			animation.play("crouch walking")
 			animation.flip_h = false if inverted else true
 			facingDirection = "left"
-			manage_loop_sound(snd_crouch) # 🎵 Som: Passos Agachado
+			manage_loop_sound(snd_crouch)
 			
 	else:
 		playerCollision.set_deferred("disabled", false)
@@ -178,22 +170,22 @@ func resolveAnimation() -> void:
 
 		if not is_on_floor():
 			animation.play("jumping")
-			manage_loop_sound(null) # 🎵 Som: No ar não há passos
+			manage_loop_sound(null)
 			
 		elif isHoldingBox:
 			if Input.get_axis("left", "right") == 0:
-				animation.play("holding box") 
-				manage_loop_sound(null) # 🎵 Som: Segurando caixa parado
+				animation.play("holding box")
+				manage_loop_sound(null)
 			elif isPullingBox:
-				animation.play_backwards("moving box") 
-				manage_loop_sound(snd_box) # 🎵 Som: Carregar caixa andando
+				animation.play_backwards("moving box")
+				manage_loop_sound(snd_box)
 			else:
-				animation.play("moving box") 
-				manage_loop_sound(snd_box) # 🎵 Som: Carregar caixa andando
+				animation.play("moving box")
+				manage_loop_sound(snd_box)
 		
 		elif Input.get_axis("left", "right") == 0:
 			animation.play("idle")
-			manage_loop_sound(null) # 🎵 Som: Idle
+			manage_loop_sound(null)
 		else:
 			animation.play("walking")
-			manage_loop_sound(snd_walk) # 🎵 Som: Andar normal
+			manage_loop_sound(snd_walk)
