@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var inverted: bool = false
 @onready var playerCollision = $playerCollision
 @onready var playerCollision2 = $playerCollision2
+var projectileScene: PackedScene = preload("res://objects/player/projectile.tscn")
 
 var baseGravity: int = 300
 var baseJumpForce: int = -274
@@ -11,14 +12,33 @@ var canJump: bool = true
 var isHoldingBox: bool = false
 var isPullingBox: bool = false
 var heldBox: Node2D = null
+var facingDirection: String
+var canShoot: bool = true
 
 func _ready() -> void:
 	startInvertedPlayer()
+
+func _process(_delta: float) -> void:
+	shoot()
 
 func _physics_process(_delta: float) -> void:
 	applyGravity()
 	jump()
 	resolveAnimation()
+
+func shoot():
+	if Input.is_action_just_pressed("shoot") and canShoot:
+		animation.play("attack throwing")
+		await animation.animation_finished
+		var projectile = projectileScene.instantiate()
+		projectile.global_position = global_position
+		get_tree().current_scene.add_child(projectile)
+		startFireCooldown()
+
+func startFireCooldown():
+	canShoot = false
+	await get_tree().create_timer(0.5).timeout
+	canShoot = true
 
 func startInvertedPlayer() -> void:
 	if inverted:
@@ -71,8 +91,8 @@ func jump() -> void:
 		canJump = false
 
 func resolveAnimation() -> void:
-	# Jujuba: Se a aterrissagem estiver rolando, trava as outras animações até ela terminar
-	if animation.animation == "landing" and animation.is_playing():
+	# Jujuba: Se a aterrissagem ou disparo estiver rolando, trava as outras animações até ela terminar
+	if (animation.animation == "landing" and animation.is_playing()) or (animation.animation == "attack throwing" and animation.is_playing()):
 		return
 
 	# Jujuba: Se estiver no chão, segurando para baixo, e NÃO estiver segurando a caixa
@@ -86,9 +106,11 @@ func resolveAnimation() -> void:
 		elif Input.get_axis("left", "right") > 0:
 			animation.play("crouch walking")
 			animation.flip_h = true if inverted else false
+			facingDirection = "right"
 		elif Input.get_axis("left", "right") < 0:
 			animation.play("crouch walking")
 			animation.flip_h = false if inverted else true
+			facingDirection = "left"
 			
 	else:
 		# Jujuba: Qualquer outra coisa que o boneco fizer, garante que a colisão normal volte a ficar ativada
@@ -99,16 +121,14 @@ func resolveAnimation() -> void:
 		if not isHoldingBox:
 			if Input.get_axis("left", "right") > 0:
 				animation.flip_h = true if inverted else false
+				facingDirection = "right"
 			elif Input.get_axis("left", "right") < 0:
 				animation.flip_h = false if inverted else true
-			
-		# Jujuba: Escolhe a animação certa checando o pulo primeiro. 
-		# Sem essa alteração, dava aquele bug do boneco não tocar a animação de pulo enquanto pulava em alguma direção.
+				facingDirection = "left"
+
 		if not is_on_floor():
 			animation.play("jumping")
 			
-		# Jujuba: --- LÓGICA DE ANIMAÇÃO DA CAIXA ---
-		# Se ele estiver segurando a caixa, assume o controle das animações de braço
 		elif isHoldingBox:
 			if Input.get_axis("left", "right") == 0:
 				animation.play("holding box") # Parado segurando a caixa

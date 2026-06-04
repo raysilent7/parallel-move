@@ -61,3 +61,6 @@ func invertGravity() -> void:
 func movePlayerWithPlatform(speed) -> void:
 	p1.global_position += speed
 	p2.global_position += speed
+
+func getPlayerFacingDirection() -> String:
+	return p1.facingDirection

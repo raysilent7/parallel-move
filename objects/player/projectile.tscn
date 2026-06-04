@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dhr3fqbxcdxvs"]
+
+[ext_resource type="Script" uid="uid://cl8i3lwlu1386" path="res://scripts/obstacles/projectile.gd" id="1_tasoh"]
+[ext_resource type="Texture2D" uid="uid://6bjtkl6ppa1e" path="res://assets/images/projectile_screwdriver.png" id="2_6taw6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_anx1o"]
+
+[node name="Projectile" type="Node2D" unique_id=1661981188]
+
+[node name="projectileArea" type="Area2D" parent="." unique_id=771377181]
+script = ExtResource("1_tasoh")
+
+[node name="projectileSpr" type="Sprite2D" parent="projectileArea" unique_id=2099164873]
+texture = ExtResource("2_6taw6")
+
+[node name="projectileShape" type="CollisionShape2D" parent="projectileArea" unique_id=1995425946]
+shape = SubResource("RectangleShape2D_anx1o")
