@@ -20,7 +20,7 @@ func _physics_process(_delta) -> void:
 		xSpeed = inputDir * (baseSpeed / 2)
 		
 	if p1.isHoldingBox or p2.isHoldingBox:
-		xSpeed = inputDir * 40 # Esse número precisa ser igual ao pushSpeed da Caixa!
+		xSpeed = inputDir * 40
 
 	var old_x = p1.global_position.x
 
