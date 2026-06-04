@@ -4,12 +4,14 @@ extends Node2D
 @onready var boxArea: Area2D = $boxBody/boxArea
 
 @export var inverted: bool = false
+@export var max_fall_speed: int = 80
 
 var playerInside: bool = false
 var playerNode: CharacterBody2D = null
 var baseGravity: int = 300
 var pushSpeed: int = 40
 var is_falling_danger: bool = false
+
 
 func _ready() -> void:
 	boxArea.body_entered.connect(onBodyEntered)
@@ -33,6 +35,11 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if not boxBody.is_on_floor():
 		boxBody.velocity.y += baseGravity * 0.070
+		
+		if baseGravity > 0:
+			boxBody.velocity.y = min(boxBody.velocity.y, max_fall_speed)
+		else:
+			boxBody.velocity.y = max(boxBody.velocity.y, -max_fall_speed)
 		
 		if abs(boxBody.velocity.y) > 50:
 			is_falling_danger = true
@@ -121,6 +128,7 @@ func _physics_process(_delta: float) -> void:
 				else:
 					if abs(collision.get_normal().y) > 0.5:
 						is_falling_danger = false
+
 
 func onBodyEntered(body: Node2D) -> void:
 	if body.name == "playerBody" or body.name == "playerBody2":

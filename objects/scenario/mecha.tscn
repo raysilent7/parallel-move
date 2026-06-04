@@ -21,4 +21,4 @@ texture = ExtResource("2_tmr6t")
 texture = ExtResource("3_56bk5")
 
 [node name="BoxSpawn" type="Marker2D" parent="." unique_id=920104129]
-position = Vector2(0, 15)
+position = Vector2(0, 20)
