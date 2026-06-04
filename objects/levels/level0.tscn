@@ -43,7 +43,7 @@ position = Vector2(30, 272)
 position = Vector2(160, 287)
 
 [node name="Key" parent="." unique_id=1457610210 instance=ExtResource("4_22cxo")]
-position = Vector2(474, 168)
+position = Vector2(274, 271)
 
 [node name="Lever1" parent="." unique_id=175695876 instance=ExtResource("7_7glo4")]
 position = Vector2(245, 5)

@@ -3,6 +3,9 @@ extends Node2D
 @onready var boxBody: CharacterBody2D = $boxBody
 @onready var boxArea: Area2D = $boxBody/boxArea
 
+# Jujuba: Nova variável para ativar o modo de cabeça para baixo no Inspetor!
+@export var inverted: bool = false
+
 var playerInside: bool = false
 var playerNode: CharacterBody2D = null
 var baseGravity: int = 300
@@ -11,6 +14,23 @@ var pushSpeed: int = 40
 func _ready() -> void:
 	boxArea.body_entered.connect(onBodyEntered)
 	boxArea.body_exited.connect(onBodyExited)
+	
+	if inverted:
+		boxBody.up_direction = Vector2.DOWN
+		baseGravity *= -1
+		
+		# Jujuba: Varre os filhos do boxBody para inverter o visual e espelhar as colisões
+		for child in boxBody.get_children():
+			if child is Sprite2D or child is AnimatedSprite2D:
+				child.flip_v = true
+				child.position.y *= -1 # Inverte o offset do próprio sprite se houver
+			elif child is CollisionShape2D or child is CollisionPolygon2D or child is Area2D:
+				child.position.y *= -1 # Força a colisão/área a pular para o teto!
+		
+		# Jujuba: Correção extra para o formato de colisão que fica guardado dentro da Area2D
+		for child in boxArea.get_children():
+			if child is CollisionShape2D or child is CollisionPolygon2D:
+				child.position.y *= -1
 
 func _physics_process(_delta: float) -> void:
 	if not boxBody.is_on_floor():
@@ -22,7 +42,6 @@ func _physics_process(_delta: float) -> void:
 	if playerNode and "heldBox" in playerNode and Input.is_action_pressed("interact"):
 		
 		# Jujuba: 1. PARA ONDE O PLAYER OLHA?
-		# Faz a matemática (levando em conta a gravidade invertida) pra descobrir o lado exato que o boneco olha
 		var playerFacing = 0
 		if playerNode.inverted:
 			playerFacing = 1 if playerNode.animation.flip_h else -1
@@ -30,57 +49,60 @@ func _physics_process(_delta: float) -> void:
 			playerFacing = -1 if playerNode.animation.flip_h else 1
 			
 		# Jujuba: 2. ONDE A CAIXA ESTÁ?
-		# Compara a posição do boneco com a caixa. Retorna +1 (Direita) ou -1 (Esquerda)
 		var dirToBox = sign(boxBody.global_position.x - playerNode.global_position.x)
 		
 		# Jujuba: 3. O ENCARAR
-		# Só dá "True" se o boneco estiver olhando diretamente pra mesma direção onde a caixa está
 		var isFacingBox = (playerFacing == dirToBox)
 		
 		# Jujuba: 4. A TRAVA DE ALVO (TARGET LOCK)
-		# Checa se o player tá livre pra agarrar essa caixa de frente, ou se ele JÁ estava agarrado nela antes
 		var canGrabTheBox = (playerInside and isFacingBox and playerNode.heldBox == null)
 		var isAlreadyHolding = (playerNode.heldBox == self)
 
 		# Jujuba: O EMPURRÃO / PUXÃO
-		# Se a trava de alvo permitiu, a gente assume o controle do Player!
 		if canGrabTheBox or isAlreadyHolding:
-			# Avisa pro código do player que a caixa oficial dele agora é esta
 			playerNode.heldBox = self
 			playerNode.isHoldingBox = true
 			
-			# Vê pra qual lado o jogador tá querendo andar no teclado/controle
 			var pushDir = Input.get_axis("left", "right")
 			
-			# Se o lado que ele quer andar for diferente do lado que a caixa tá, ele está PUXANDO
 			if pushDir != 0 and pushDir != dirToBox:
 				playerNode.isPullingBox = true
 			else:
 				playerNode.isPullingBox = false
 				
-			# Força o boneco a ficar olhando pra caixa enquanto segura ela
 			if dirToBox > 0:
 				playerNode.animation.flip_h = true if playerNode.inverted else false
 			elif dirToBox < 0:
 				playerNode.animation.flip_h = false if playerNode.inverted else true
 				
-			# Finalmente, manda a caixa andar!
-			boxBody.velocity.x = pushDir * pushSpeed
+			# 🛠️ JUJUBA: --- NOVA COLOAÇÃO DE SEGURANÇA ANTILOCK ---
+			# Vamos descobrir SE o jogador foi parado por um obstáculo real do cenário (TileMap, paredes, etc)
+			var parado_pelo_cenario = false
+			if abs(playerNode.velocity.x) < 1.0:
+				for i in playerNode.get_slide_collision_count():
+					var colisao = playerNode.get_slide_collision(i)
+					# Se o que parou o jogador NÃO foi esta caixa, então foi um teto/parede!
+					if colisao.get_collider() != boxBody:
+						parado_pelo_cenario = true
+						break
+			
+			# Se ele bateu com a cabeça ou numa parede real, a caixa trava.
+			# Se ele só parou porque encostou na caixa, deixamos a caixa andar livremente!
+			if parado_pelo_cenario:
+				boxBody.velocity.x = 0
+			else:
+				boxBody.velocity.x = pushDir * pushSpeed
 		else:
-			# Jujuba: Se o player tá agarrando a caixa vizinha, esta aqui fica congelada no lugar
 			boxBody.velocity.x = 0
 			
 	else:
 		# Jujuba: SOLTOU O BOTÃO OU FOI EMBORA
-		# Limpa a memória do player pra ele soltar a caixa e parar de fazer força
 		if playerNode and "heldBox" in playerNode:
-			# Só limpa as variáveis se ELE for o dono dessa caixa específica
 			if playerNode.heldBox == self:
 				playerNode.heldBox = null
 				playerNode.isHoldingBox = false
 				playerNode.isPullingBox = false
 				
-			# Se ele não tá na área e não tá segurando nada, a caixa esquece completamente dele
 			if not playerInside and playerNode.heldBox == null:
 				playerNode = null
 				
@@ -90,15 +112,12 @@ func _physics_process(_delta: float) -> void:
 
 
 func onBodyEntered(body: Node2D) -> void:
-	# Jujuba: AQUI ESTÁ O SEGREDO! Agora a caixa só interage se for o Charles ou o Void.
-	# O Wobble vai pisar nela e nada vai acontecer.
 	if body.name == "playerBody" or body.name == "playerBody2":
 		playerInside = true
 		playerNode = body
 
 
 func onBodyExited(body: Node2D) -> void:
-	# Só processa a saída se quem estiver saindo for um dos irmãos.
 	if body.name == "playerBody" or body.name == "playerBody2":
 		playerInside = false
 		if playerNode and "heldBox" in playerNode and playerNode.heldBox != self:
