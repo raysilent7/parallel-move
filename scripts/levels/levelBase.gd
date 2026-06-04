@@ -3,7 +3,7 @@ extends Node2D
 @onready var camera: Camera2D = $camera
 @onready var player: Node2D = $Player
 @onready var light: PointLight2D = $light
-@onready var darkness: CanvasModulate = $darkness
+@onready var darkness: CanvasModulate = $obstacles/darkness
 
 func _ready() -> void:
 	AudioManager.startMusicSystem()
