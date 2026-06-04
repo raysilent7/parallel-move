@@ -1,0 +1,169 @@
+[gd_scene format=3 uid="uid://mu26dtivi2b7"]
+
+[ext_resource type="Script" uid="uid://ck8hwefv2in3b" path="res://scripts/enemies/wobbleBody.gd" id="1_dl6pr"]
+[ext_resource type="Texture2D" uid="uid://kqgbp0btaqiu" path="res://assets/images/enemy_wobble.png" id="2_6ws2d"]
+[ext_resource type="AudioStream" uid="uid://cifsr5wp8ky55" path="res://assets/sounds/wobble bounce.mp3" id="3_cojix"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6ws2d"]
+radius = 48.010414
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cojix"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gx85f"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eq5gk"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4pua"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w6rxo"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c2mho"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1wye"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hiwr"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c7n0s"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(384, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6rwmo"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(432, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5m21"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(480, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i5q88"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(528, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6sr6s"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(576, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rg72q"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(624, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ih3v6"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(672, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5a87"]
+atlas = ExtResource("2_6ws2d")
+region = Rect2(720, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xgwla"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cojix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gx85f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eq5gk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4pua")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w6rxo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c2mho")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1wye")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4hiwr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c7n0s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6rwmo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5m21")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i5q88")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6sr6s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rg72q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ih3v6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5a87")
+}],
+"loop": true,
+"name": &"wobble idle",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r5pjc"]
+size = Vector2(14, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cojix"]
+size = Vector2(16, 12)
+
+[node name="wobbleBody" type="CharacterBody2D" unique_id=1442308924]
+script = ExtResource("1_dl6pr")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1164688052]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1738439228]
+shape = SubResource("CircleShape2D_6ws2d")
+
+[node name="WanderTimer" type="Timer" parent="." unique_id=869666843]
+
+[node name="wobbleAnim" type="AnimatedSprite2D" parent="." unique_id=941827179]
+sprite_frames = SubResource("SpriteFrames_xgwla")
+animation = &"wobble idle"
+autoplay = "wobble idle"
+metadata/_edit_lock_ = true
+
+[node name="wobbleCollision" type="CollisionShape2D" parent="." unique_id=1412902186]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_r5pjc")
+
+[node name="DamageArea" type="Area2D" parent="." unique_id=1176091068]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea" unique_id=661761634]
+position = Vector2(0, 3)
+shape = SubResource("RectangleShape2D_cojix")
+debug_color = Color(0.99997133, 0, 0.11064974, 0.41960785)
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="." unique_id=1968852448]
+stream = ExtResource("3_cojix")
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="body_entered" from="DamageArea" to="." method="_on_damage_area_body_entered"]
+[connection signal="body_exited" from="DamageArea" to="." method="_on_damage_area_body_exited"]

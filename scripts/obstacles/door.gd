@@ -7,6 +7,7 @@ extends Node2D
 
 var playerInside: bool = false
 var isOpen: bool = false
+var isTransitioning: bool = false 
 
 func _ready() -> void:
 	doorArea.body_entered.connect(onBodyEntered)
@@ -21,12 +22,14 @@ func _process(_delta: float) -> void:
 	if isOpen and doorAnim.animation.begins_with("opening"):
 		doorAnim.play("opened")
 
-	if not GameState.buttonPressed and isOpen:
+	if not GameState.buttonPressed and isOpen and not isTransitioning:
+		isTransitioning = true
 		isOpen = false
 		doorCollision.disabled = false
 		doorAnim.play("closing")
 		await doorAnim.animation_finished
 		doorAnim.play("closed")
+		isTransitioning = false
 
 func onBodyEntered(body: Node2D) -> void:
 	if body is CharacterBody2D:
@@ -37,16 +40,20 @@ func onBodyExited(body: Node2D) -> void:
 		playerInside = false
 
 func openWithKey() -> void:
-	if Input.is_action_just_pressed("interact") and playerInside and GameState.hasKey:
+	if Input.is_action_just_pressed("interact") and playerInside and GameState.hasKey and not isTransitioning:
+		isTransitioning = true
 		GameState.hasKey = false
 		doorAnim.play("opening")
 		await doorAnim.animation_finished
 		doorCollision.disabled = true
 		isOpen = true
+		isTransitioning = false
 
 func openByPressureButton() -> void:
-	if GameState.buttonPressed and not isOpen:
+	if GameState.buttonPressed and not isOpen and not isTransitioning:
+		isTransitioning = true
 		doorAnim.play("opening")
 		await doorAnim.animation_finished
 		doorCollision.disabled = true
 		isOpen = true
+		isTransitioning = false

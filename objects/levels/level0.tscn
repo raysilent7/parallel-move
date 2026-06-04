@@ -18,7 +18,7 @@
 size = Vector2(160, 9)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wc3mr"]
-size = Vector2(288, 8)
+size = Vector2(288, 9)
 
 [node name="Level0" type="Node2D" unique_id=44074444]
 script = ExtResource("1_22cxo")
@@ -43,7 +43,7 @@ position = Vector2(30, 272)
 position = Vector2(160, 287)
 
 [node name="Key" parent="." unique_id=1457610210 instance=ExtResource("4_22cxo")]
-position = Vector2(474, 168)
+position = Vector2(274, 271)
 
 [node name="Lever1" parent="." unique_id=175695876 instance=ExtResource("7_7glo4")]
 position = Vector2(245, 5)
@@ -59,7 +59,7 @@ shape = SubResource("RectangleShape2D_7glo4")
 script = ExtResource("4_wc3mr")
 
 [node name="trapCollision" type="CollisionShape2D" parent="trapArea2" unique_id=333686464]
-position = Vector2(444, 28)
+position = Vector2(420, 299)
 shape = SubResource("RectangleShape2D_wc3mr")
 
 [node name="Lever" parent="." unique_id=67071332 instance=ExtResource("7_7glo4")]

@@ -23,6 +23,10 @@ func _physics_process(_delta) -> void:
 	if p1.isHoldingBox or p2.isHoldingBox:
 		xSpeed = inputDir * 40 # Esse número precisa ser igual ao pushSpeed da Caixa!
 		
+	# 🕵️‍♀️ JUJUBA: Guardamos a posição X exata dos players ANTES deles se moverem.
+	# Como eles começam o frame alinhados, a posição de um serve para os dois.
+	var old_x = p1.global_position.x
+
 	if inputDir == 0:
 		p1.tryToMove(0)
 		p2.tryToMove(0)
@@ -34,23 +38,42 @@ func _physics_process(_delta) -> void:
 		p1.tryGoUp(ySpeed)
 		p2.tryGoUp(ySpeed*-1)
 		
-	# Jujuba: Sincroniza a posição X dos dois players para andarem perfeitamente alinhados
-	if p1.global_position.x > p2.global_position.x or p1.global_position.x < p2.global_position.x:
+	# 🛠️ NOVA SINCRONIZAÇÃO SEGURA (Anti-Clipping / Anti-Super Salto):
+	# Calculamos quantos pixels cada irmão conseguiu caminhar de verdade neste frame
+	var dist_p1 = abs(p1.global_position.x - old_x)
+	var dist_p2 = abs(p2.global_position.x - old_x)
+
+	if dist_p1 < dist_p2:
+		# O Charles (p1) colidiu com algo (caixa/parede) e andou menos! 
+		# O Void (p2) recua e se alinha perfeitamente ao X seguro do Charles.
+		p2.global_position.x = p1.global_position.x
+	elif dist_p2 < dist_p1:
+		# O Void (p2) colidiu com algo no mundo dele e andou menos! 
+		# O Charles (p1) recua e se alinha perfeitamente ao X seguro do Void.
 		p1.global_position.x = p2.global_position.x
-		p1.tryToMove(0)
-		if p1.global_position.x > p2.global_position.x or p1.global_position.x < p2.global_position.x:
-			p2.global_position.x = p1.global_position.x
 
 func death() -> void:
+	if p1.isHoldingKeyAnim:
+		return
+
 	p1.animation.play("death")
 	p2.animation.play("void death")
+	AudioManager.playDeath()
 	p1.set_physics_process(false)
 	p2.set_physics_process(false)
 	set_physics_process(false)
+	await p1.animation.animation_finished
+	movePlayerToCheckPoint()
+
+func revive() -> void:
+	p1.set_physics_process(true)
+	p2.set_physics_process(true)
+	set_physics_process(true)
 
 func movePlayerToCheckPoint() -> void:
 	p1.global_position = GameState.lastCheckpointP1
 	p2.global_position = GameState.lastCheckpointP2
+	revive()
 
 func invertGravity() -> void:
 	p1.invertValues()
@@ -70,11 +93,15 @@ func moveTo(destiny: Vector2, destiny2: Vector2) -> void:
 func activateUpButton() -> void:
 	p1.canGoUp = true
 	p1.baseGravity = 0
+	p1.baseJumpForce = 0
 	p2.canGoUp = true
 	p2.baseGravity = 0
+	p2.baseJumpForce = 0
 
 func deactivateUpButton() -> void:
 	p1.canGoUp = false
 	p1.baseGravity = 274
+	p1.baseJumpForce = -320
 	p2.canGoUp = false
 	p2.baseGravity = -274
+	p2.baseJumpForce = 320
