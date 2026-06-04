@@ -7,7 +7,6 @@ extends Node2D
 
 var playerInside: bool = false
 var isOpen: bool = false
-# Jujuba: Trava de segurança inquebrável contra o spam de frames do _process
 var isTransitioning: bool = false 
 
 func _ready() -> void:
@@ -23,7 +22,6 @@ func _process(_delta: float) -> void:
 	if isOpen and doorAnim.animation.begins_with("opening"):
 		doorAnim.play("opened")
 
-	# Jujuba: Só tenta fechar se o botão soltou, a porta estava aberta e NÃO está mudando de animação agora
 	if not GameState.buttonPressed and isOpen and not isTransitioning:
 		isTransitioning = true
 		isOpen = false
@@ -52,7 +50,6 @@ func openWithKey() -> void:
 		isTransitioning = false
 
 func openByPressureButton() -> void:
-	# Jujuba: Só tenta abrir se o botão estiver ativo, a porta fechada e não estiver ocupada transicionando
 	if GameState.buttonPressed and not isOpen and not isTransitioning:
 		isTransitioning = true
 		doorAnim.play("opening")

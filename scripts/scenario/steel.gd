@@ -1,11 +1,9 @@
 extends Node2D
 
-# 🔗 REFERÊNCIAS DOS NÓS FILHOS
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var particles: GPUParticles2D = $GPUParticles2D
-@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D # Jujuba: Puxa o tocador de som!
+@onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D 
 
-# ⚙️ CONFIGURAÇÕES AJUSTÁVEIS NO INSPETOR
 @export var min_speed: float = 1.0     
 @export var max_speed: float = 2.5     
 @export var min_duration: float = 1.5  
@@ -19,7 +17,6 @@ var action_timer: float = 0.0
 func _ready() -> void:
 	print("⚙️💨🎵 [STEEL] Sistema unificado com ÁUDIO inicializado!")
 	
-	# Verificações de segurança
 	if sprite == null: print("❌ [ERRO] Não encontrei o nó 'Sprite2D'.")
 	if particles == null: print("❌ [ERRO] Não encontrei o nó 'GPUParticles2D'.")
 	if audio_player == null: print("❌ [ERRO] Não encontrei o nó 'AudioStreamPlayer2D'.")

@@ -53,24 +53,27 @@ func _physics_process(_delta) -> void:
 		p1.global_position.x = p2.global_position.x
 
 func death() -> void:
-	# Jujuba: ARMADURA DE INVENCIBILIDADE
-	# Se o Charles estiver segurando a chave, o jogo ignora a morte!
 	if p1.isHoldingKeyAnim:
 		return
 
-	# 🎵 JUJUBA: Para os passos e toca o áudio de morte do Charles!
-	if p1.has_method("play_death_sound"):
-		p1.play_death_sound()
-
 	p1.animation.play("death")
 	p2.animation.play("void death")
+	AudioManager.playDeath()
 	p1.set_physics_process(false)
 	p2.set_physics_process(false)
 	set_physics_process(false)
+	await p1.animation.animation_finished
+	movePlayerToCheckPoint()
+
+func revive() -> void:
+	p1.set_physics_process(true)
+	p2.set_physics_process(true)
+	set_physics_process(true)
 
 func movePlayerToCheckPoint() -> void:
 	p1.global_position = GameState.lastCheckpointP1
 	p2.global_position = GameState.lastCheckpointP2
+	revive()
 
 func invertGravity() -> void:
 	p1.invertValues()
@@ -90,11 +93,15 @@ func moveTo(destiny: Vector2, destiny2: Vector2) -> void:
 func activateUpButton() -> void:
 	p1.canGoUp = true
 	p1.baseGravity = 0
+	p1.baseJumpForce = 0
 	p2.canGoUp = true
 	p2.baseGravity = 0
+	p2.baseJumpForce = 0
 
 func deactivateUpButton() -> void:
 	p1.canGoUp = false
 	p1.baseGravity = 274
+	p1.baseJumpForce = -320
 	p2.canGoUp = false
 	p2.baseGravity = -274
+	p2.baseJumpForce = 320

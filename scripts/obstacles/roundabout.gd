@@ -6,7 +6,6 @@ func _ready() -> void:
 func onBodyEntered(body: Node2D) -> void:
 	print("aconteci 1")
 	
-	# Jujuba: Garante que estamos falando com um dos corpos do player
 	if body is CharacterBody2D and (body.name == "playerBody" or body.name == "playerBody2"):
 		var controller = body.get_parent()
 		
@@ -21,7 +20,6 @@ func onBodyEntered(body: Node2D) -> void:
 		if "heldBox" in body and body.heldBox != null:
 			var caixa = body.heldBox
 			if "boxBody" in caixa:
-				# Move a caixa pela mesma distância relativa que o player vai viajar
 				caixa.boxBody.global_position.x += offset_x
 		
 		# Jujuba: Agora ativa o teletransporte que o seu amigo programou no Controller

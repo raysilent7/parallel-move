@@ -7,4 +7,4 @@ func _ready() -> void:
 
 func onBodyEntered(body: Node2D) -> void:
 	if body is CharacterBody2D:
-		playerController.movePlayerToCheckPoint()
+		playerController.death()

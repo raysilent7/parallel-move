@@ -18,7 +18,6 @@
 [ext_resource type="Script" uid="uid://bobnwchhe26kn" path="res://scripts/enemies/wobble_spawn.gd" id="16_2iiqh"]
 [ext_resource type="PackedScene" uid="uid://mu26dtivi2b7" path="res://objects/enemies/wobble.tscn" id="17_23sfv"]
 [ext_resource type="PackedScene" uid="uid://qh6icqodvqpv" path="res://objects/scenario/steel.tscn" id="18_0maag"]
-[ext_resource type="AudioStream" uid="uid://bf5oea2xs8p1x" path="res://assets/sounds/Clockwork Utopia.mp3" id="19_xj34c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x56sq"]
 texture = ExtResource("3_23sfv")
@@ -398,8 +397,3 @@ inverted = true
 
 [node name="Steel" parent="." unique_id=158383144 instance=ExtResource("18_0maag")]
 position = Vector2(-367, 216)
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=384787663]
-stream = ExtResource("19_xj34c")
-volume_db = -13.866
-autoplay = true
