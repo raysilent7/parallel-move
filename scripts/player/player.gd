@@ -147,11 +147,11 @@ func resolveAnimation() -> void:
 			
 		elif isHoldingBox:
 			if Input.get_axis("left", "right") == 0:
-				animation.play("holding box") 
+				animation.play("holding box")
 			elif isPullingBox:
-				animation.play_backwards("moving box") 
+				animation.play_backwards("moving box")
 			else:
-				animation.play("moving box") 
+				animation.play("moving box")
 		
 		elif Input.get_axis("left", "right") == 0:
 			animation.play("idle")

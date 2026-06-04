@@ -3,13 +3,13 @@ extends Node2D
 @onready var boxBody: CharacterBody2D = $boxBody
 @onready var boxArea: Area2D = $boxBody/boxArea
 
-# Jujuba: Nova variável para ativar o modo de cabeça para baixo no Inspetor!
 @export var inverted: bool = false
 
 var playerInside: bool = false
 var playerNode: CharacterBody2D = null
 var baseGravity: int = 300
 var pushSpeed: int = 40
+var is_falling_danger: bool = false
 
 func _ready() -> void:
 	boxArea.body_entered.connect(onBodyEntered)
@@ -19,15 +19,13 @@ func _ready() -> void:
 		boxBody.up_direction = Vector2.DOWN
 		baseGravity *= -1
 		
-		# Jujuba: Varre os filhos do boxBody para inverter o visual e espelhar as colisões
 		for child in boxBody.get_children():
 			if child is Sprite2D or child is AnimatedSprite2D:
 				child.flip_v = true
-				child.position.y *= -1 # Inverte o offset do próprio sprite se houver
+				child.position.y *= -1
 			elif child is CollisionShape2D or child is CollisionPolygon2D or child is Area2D:
-				child.position.y *= -1 # Força a colisão/área a pular para o teto!
+				child.position.y *= -1
 		
-		# Jujuba: Correção extra para o formato de colisão que fica guardado dentro da Area2D
 		for child in boxArea.get_children():
 			if child is CollisionShape2D or child is CollisionPolygon2D:
 				child.position.y *= -1
@@ -35,30 +33,25 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if not boxBody.is_on_floor():
 		boxBody.velocity.y += baseGravity * 0.070
+		
+		if abs(boxBody.velocity.y) > 50:
+			is_falling_danger = true
 	else:
 		boxBody.velocity.y = 0
+		is_falling_danger = false
 
-	# Jujuba: Adicionamos o "heldBox" in playerNode aqui como armadura de segurança extra!
 	if playerNode and "heldBox" in playerNode and Input.is_action_pressed("interact"):
-		
-		# Jujuba: 1. PARA ONDE O PLAYER OLHA?
 		var playerFacing = 0
 		if playerNode.inverted:
 			playerFacing = 1 if playerNode.animation.flip_h else -1
 		else:
 			playerFacing = -1 if playerNode.animation.flip_h else 1
 			
-		# Jujuba: 2. ONDE A CAIXA ESTÁ?
 		var dirToBox = sign(boxBody.global_position.x - playerNode.global_position.x)
-		
-		# Jujuba: 3. O ENCARAR
 		var isFacingBox = (playerFacing == dirToBox)
-		
-		# Jujuba: 4. A TRAVA DE ALVO (TARGET LOCK)
 		var canGrabTheBox = (playerInside and isFacingBox and playerNode.heldBox == null)
 		var isAlreadyHolding = (playerNode.heldBox == self)
 
-		# Jujuba: O EMPURRÃO / PUXÃO
 		if canGrabTheBox or isAlreadyHolding:
 			playerNode.heldBox = self
 			playerNode.isHoldingBox = true
@@ -75,19 +68,14 @@ func _physics_process(_delta: float) -> void:
 			elif dirToBox < 0:
 				playerNode.animation.flip_h = false if playerNode.inverted else true
 				
-			# 🛠️ JUJUBA: --- NOVA COLOAÇÃO DE SEGURANÇA ANTILOCK ---
-			# Vamos descobrir SE o jogador foi parado por um obstáculo real do cenário (TileMap, paredes, etc)
 			var parado_pelo_cenario = false
 			if abs(playerNode.velocity.x) < 1.0:
 				for i in playerNode.get_slide_collision_count():
 					var colisao = playerNode.get_slide_collision(i)
-					# Se o que parou o jogador NÃO foi esta caixa, então foi um teto/parede!
 					if colisao.get_collider() != boxBody:
 						parado_pelo_cenario = true
 						break
 			
-			# Se ele bateu com a cabeça ou numa parede real, a caixa trava.
-			# Se ele só parou porque encostou na caixa, deixamos a caixa andar livremente!
 			if parado_pelo_cenario:
 				boxBody.velocity.x = 0
 			else:
@@ -96,7 +84,6 @@ func _physics_process(_delta: float) -> void:
 			boxBody.velocity.x = 0
 			
 	else:
-		# Jujuba: SOLTOU O BOTÃO OU FOI EMBORA
 		if playerNode and "heldBox" in playerNode:
 			if playerNode.heldBox == self:
 				playerNode.heldBox = null
@@ -110,19 +97,41 @@ func _physics_process(_delta: float) -> void:
 
 	boxBody.move_and_slide()
 
+	if is_falling_danger:
+		for i in boxBody.get_slide_collision_count():
+			var collision = boxBody.get_slide_collision(i)
+			var collider = collision.get_collider()
+			
+			if collider != null:
+				if collider.name == "playerBody" or collider.name == "playerBody2":
+					var normal_y = collision.get_normal().y
+					
+					if baseGravity > 0:
+						if normal_y < -0.5:
+							var controller = collider.get_parent()
+							if controller.has_method("death"):
+								controller.death()
+								
+					elif baseGravity < 0:
+						if normal_y > 0.5:
+							var controller = collider.get_parent()
+							if controller.has_method("death"):
+								controller.death()
+								
+				else:
+					if abs(collision.get_normal().y) > 0.5:
+						is_falling_danger = false
 
 func onBodyEntered(body: Node2D) -> void:
 	if body.name == "playerBody" or body.name == "playerBody2":
 		playerInside = true
 		playerNode = body
 
-
 func onBodyExited(body: Node2D) -> void:
 	if body.name == "playerBody" or body.name == "playerBody2":
 		playerInside = false
 		if playerNode and "heldBox" in playerNode and playerNode.heldBox != self:
 			playerNode = null
-
 
 func movePlayerWithPlatform(moveSpeed: Vector2) -> void:
 	boxBody.global_position += moveSpeed

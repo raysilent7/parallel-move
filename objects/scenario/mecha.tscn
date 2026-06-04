@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bejq6gqnthow8"]
+
+[ext_resource type="Script" uid="uid://cdrerju11abte" path="res://scripts/scenario/mecha.gd" id="1_56bk5"]
+[ext_resource type="Texture2D" uid="uid://cx5frffy7j7qv" path="res://assets/images/scenario/hand_middle.png" id="1_ejopp"]
+[ext_resource type="Texture2D" uid="uid://de0uiah286cx6" path="res://assets/images/scenario/hand_g1.png" id="2_tmr6t"]
+[ext_resource type="Texture2D" uid="uid://dwjrig7448hyu" path="res://assets/images/scenario/hand_g2.png" id="3_56bk5"]
+
+[node name="Mecha" type="Node2D" unique_id=1257056170]
+script = ExtResource("1_56bk5")
+
+[node name="spin" type="Marker2D" parent="." unique_id=281505223]
+position = Vector2(0, -9)
+
+[node name="ball" type="Sprite2D" parent="." unique_id=355233845]
+texture = ExtResource("1_ejopp")
+
+[node name="arm 1" type="Sprite2D" parent="." unique_id=357168921]
+texture = ExtResource("2_tmr6t")
+
+[node name="arm 2" type="Sprite2D" parent="." unique_id=718316950]
+texture = ExtResource("3_56bk5")
+
+[node name="BoxSpawn" type="Marker2D" parent="." unique_id=920104129]
+position = Vector2(0, 15)

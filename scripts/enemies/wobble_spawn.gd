@@ -3,7 +3,7 @@ extends Marker2D
 @export var wobble_scene: PackedScene
 @export var max_wobbles: int = 3
 @export var spawn_interval: float = 4.0
-@export var inverted: bool = false # Certifique-se de ativar no Inspetor do spawner do Void!
+@export var inverted: bool = false 
 
 @onready var timer = $Timer
 
@@ -18,7 +18,6 @@ func _on_timer_timeout() -> void:
 	if current_wobble_count < max_wobbles and wobble_scene:
 		var new_wobble = wobble_scene.instantiate()
 		
-		# Jujuba: Super proteção! Configura o modo invertido se a raiz for o corpo OU se for o Node2D genérico
 		if new_wobble is CharacterBody2D:
 			new_wobble.inverted = self.inverted
 		elif new_wobble.has_node("wobbleBody"):
