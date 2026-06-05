@@ -474,7 +474,7 @@ grow_vertical = 2
 
 [node name="startButton" type="Button" parent="menu/buttonContainer" unique_id=800084396]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.81960785, 0.7921569, 0, 1)
+theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
 theme_override_fonts/font = ExtResource("6_nllb3")
 theme_override_font_sizes/font_size = 32
 text = "START"
