@@ -563,3 +563,5 @@ position = Vector2(11, 324)
 enabled = false
 texture = ExtResource("13_3cmo6")
 metadata/_edit_lock_ = true
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1142258345]

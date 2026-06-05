@@ -6,3 +6,4 @@ var hasKey: bool = false #padrao FALSE
 var gravityInverted: bool = false #padrao FALSE
 var isDark: bool = false #padrao FALSE
 var buttonPressed: bool = false #padrao FALSE
+var nextLevelPath: String = ""

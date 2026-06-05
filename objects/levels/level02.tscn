@@ -15,7 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://qh6icqodvqpv" path="res://objects/scenario/steel.tscn" id="13_spgtn"]
 [ext_resource type="Script" uid="uid://ejt1amw7kbnb" path="res://scripts/scenario/endGame.gd" id="14_tc7n1"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x56sq"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tc7n1"]
 texture = ExtResource("2_tc7n1")
 0:0/0 = 0
 1:0/0 = 0
@@ -160,7 +160,7 @@ texture = ExtResource("2_tc7n1")
 12:13/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_m1545"]
-sources/0 = SubResource("TileSetAtlasSource_x56sq")
+sources/0 = SubResource("TileSetAtlasSource_tc7n1")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_55r3x"]
 texture = ExtResource("3_j3k7w")
@@ -231,7 +231,7 @@ texture = ExtResource("3_j3k7w")
 [sub_resource type="TileSet" id="TileSet_x56sq"]
 sources/0 = SubResource("TileSetAtlasSource_55r3x")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m0v75"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j3k7w"]
 texture = ExtResource("4_aor6i")
 0:0/0 = 0
 1:0/0 = 0
@@ -298,7 +298,7 @@ texture = ExtResource("4_aor6i")
 7:7/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_ajmwq"]
-sources/0 = SubResource("TileSetAtlasSource_m0v75")
+sources/0 = SubResource("TileSetAtlasSource_j3k7w")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_slxrl"]
 texture = ExtResource("5_66fol")
@@ -448,3 +448,5 @@ nextLevel = "level3"
 [node name="endGameShape" type="CollisionShape2D" parent="endGame" unique_id=24228115]
 position = Vector2(-45, 1)
 shape = SubResource("RectangleShape2D_j3k7w")
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1510906575]
