@@ -4,18 +4,22 @@ var playerName: String = ""
 var playerId: String = ""
 var lastLevel: String = ""
 
-func _ready():
+func _ready() -> void:
 	loadData()
 	if playerId == "":
 		generateNewPlayer()
 
-func generateNewPlayer():
+func generateNewPlayer() -> void:
 	playerId = str(randi()) + str(Time.get_ticks_msec())
 	playerName = "Player" + playerId
 	lastLevel = "level1"
 	saveData()
 
-func saveData():
+func saveLevelBeaten(nextLevel: String) -> void:
+	lastLevel = nextLevel
+	saveData()
+
+func saveData() -> void:
 	var data: Dictionary = {
 		"playerName": playerName,
 		"playerId": playerId,
@@ -24,7 +28,7 @@ func saveData():
 	var file: FileAccess = FileAccess.open("user://player.save", FileAccess.WRITE)
 	file.store_var(data)
 
-func loadData():
+func loadData() -> void:
 	if not FileAccess.file_exists("user://player.save"):
 		return
 	var file: FileAccess = FileAccess.open("user://player.save", FileAccess.READ)

@@ -1,21 +1,21 @@
 [gd_scene format=4 uid="uid://bufwgpc5ec3hv"]
 
-[ext_resource type="Script" uid="uid://dnobu6yr8u2up" path="res://scripts/levels/level_04.gd" id="1_xc7xd"]
-[ext_resource type="Texture2D" uid="uid://c2wiho6ebnfw7" path="res://assets/images/scenario/brick wall .png" id="3_6d80i"]
-[ext_resource type="Texture2D" uid="uid://bdgvjmydhpaks" path="res://assets/images/scenario/elements void.png" id="4_cejls"]
-[ext_resource type="Texture2D" uid="uid://bllucvfiifttu" path="res://assets/images/scenario/elements.png" id="4_q7wwe"]
-[ext_resource type="PackedScene" uid="uid://iwh8x54a7k7a" path="res://objects/obstacles/box.tscn" id="5_k07ct"]
-[ext_resource type="Texture2D" uid="uid://bfh1irck63hpn" path="res://assets/images/scenario/floor.png" id="6_6pwbn"]
-[ext_resource type="TileSet" uid="uid://d3h1hanubuxiy" path="res://assets/images/traps.tres" id="7_h578k"]
-[ext_resource type="PackedScene" uid="uid://j0tq4omw5yxh" path="res://objects/player/player.tscn" id="8_s66cu"]
-[ext_resource type="PackedScene" uid="uid://dkucy0uu1gca3" path="res://objects/obstacles/door.tscn" id="9_q7afe"]
-[ext_resource type="PackedScene" uid="uid://xdhadok2aega" path="res://objects/obstacles/key.tscn" id="10_r6ohf"]
-[ext_resource type="PackedScene" uid="uid://bejq6gqnthow8" path="res://objects/scenario/mecha.tscn" id="13_hxns0"]
-[ext_resource type="Texture2D" uid="uid://bb5tnyytx44mr" path="res://assets/images/light texture.png" id="14_twroo"]
-[ext_resource type="PackedScene" uid="uid://qh6icqodvqpv" path="res://objects/scenario/steel.tscn" id="18_ukchq"]
+[ext_resource type="Script" uid="uid://dnobu6yr8u2up" path="res://scripts/levels/level_04.gd" id="1_v7x1m"]
+[ext_resource type="Texture2D" uid="uid://c2wiho6ebnfw7" path="res://assets/images/scenario/brick wall .png" id="2_tc7n1"]
+[ext_resource type="Texture2D" uid="uid://bllucvfiifttu" path="res://assets/images/scenario/elements.png" id="3_j3k7w"]
+[ext_resource type="Texture2D" uid="uid://bdgvjmydhpaks" path="res://assets/images/scenario/elements void.png" id="4_aor6i"]
+[ext_resource type="Texture2D" uid="uid://bfh1irck63hpn" path="res://assets/images/scenario/floor.png" id="5_66fol"]
+[ext_resource type="TileSet" uid="uid://d3h1hanubuxiy" path="res://assets/images/traps.tres" id="6_vm5ue"]
+[ext_resource type="PackedScene" uid="uid://j0tq4omw5yxh" path="res://objects/player/player.tscn" id="7_kwmrn"]
+[ext_resource type="PackedScene" uid="uid://dkucy0uu1gca3" path="res://objects/obstacles/door.tscn" id="8_atd2q"]
+[ext_resource type="PackedScene" uid="uid://xdhadok2aega" path="res://objects/obstacles/key.tscn" id="9_2nsxm"]
+[ext_resource type="Texture2D" uid="uid://bb5tnyytx44mr" path="res://assets/images/light texture.png" id="10_2vkci"]
+[ext_resource type="PackedScene" uid="uid://bejq6gqnthow8" path="res://objects/scenario/mecha.tscn" id="11_26ele"]
+[ext_resource type="PackedScene" uid="uid://iwh8x54a7k7a" path="res://objects/obstacles/box.tscn" id="12_fycyp"]
+[ext_resource type="PackedScene" uid="uid://qh6icqodvqpv" path="res://objects/scenario/steel.tscn" id="13_spgtn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x56sq"]
-texture = ExtResource("3_6d80i")
+texture = ExtResource("2_tc7n1")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -162,7 +162,7 @@ texture = ExtResource("3_6d80i")
 sources/0 = SubResource("TileSetAtlasSource_x56sq")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_55r3x"]
-texture = ExtResource("4_q7wwe")
+texture = ExtResource("3_j3k7w")
 1:0/0 = 0
 2:0/0 = 0
 3:0/0 = 0
@@ -231,7 +231,7 @@ texture = ExtResource("4_q7wwe")
 sources/0 = SubResource("TileSetAtlasSource_55r3x")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m0v75"]
-texture = ExtResource("4_cejls")
+texture = ExtResource("4_aor6i")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -300,7 +300,7 @@ texture = ExtResource("4_cejls")
 sources/0 = SubResource("TileSetAtlasSource_m0v75")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_slxrl"]
-texture = ExtResource("6_6pwbn")
+texture = ExtResource("5_66fol")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:0/0 = 0
@@ -339,7 +339,7 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_slxrl")
 
 [node name="Level4" type="Node2D" unique_id=44074444]
-script = ExtResource("1_xc7xd")
+script = ExtResource("1_v7x1m")
 
 [node name="wall" type="TileMapLayer" parent="." unique_id=1009702157]
 visibility_layer = 3
@@ -362,15 +362,16 @@ tile_map_data = PackedByteArray("AADj/xEAAAADAAIAAADj/xIAAAADAAIAAAAeABEAAAABAAI
 tile_set = SubResource("TileSet_amruh")
 
 [node name="traps" type="TileMapLayer" parent="." unique_id=779153291]
-tile_set = ExtResource("7_h578k")
+tile_set = ExtResource("6_vm5ue")
 
-[node name="Player" parent="." unique_id=1047240455 instance=ExtResource("8_s66cu")]
+[node name="Player" parent="." unique_id=1047240455 instance=ExtResource("7_kwmrn")]
 position = Vector2(1, 263)
 
-[node name="Door" parent="." unique_id=1272420601 instance=ExtResource("9_q7afe")]
+[node name="Door" parent="." unique_id=1272420601 instance=ExtResource("8_atd2q")]
 position = Vector2(239, 278)
+hasDoorLock = true
 
-[node name="Key" parent="." unique_id=1457610210 instance=ExtResource("10_r6ohf")]
+[node name="Key" parent="." unique_id=1457610210 instance=ExtResource("9_2nsxm")]
 position = Vector2(-258, 472)
 
 [node name="camera" type="Camera2D" parent="." unique_id=888559363]
@@ -380,7 +381,7 @@ zoom = Vector2(1.2, 1.2)
 [node name="light" type="PointLight2D" parent="." unique_id=30471957]
 position = Vector2(-114, -99)
 enabled = false
-texture = ExtResource("14_twroo")
+texture = ExtResource("10_2vkci")
 
 [node name="darkness" type="CanvasModulate" parent="." unique_id=373168389]
 visible = false
@@ -389,11 +390,11 @@ metadata/_edit_lock_ = true
 
 [node name="Garra" type="Node2D" parent="." unique_id=1485664581]
 
-[node name="Mecha" parent="Garra" unique_id=1257056170 node_paths=PackedStringArray("point_a", "point_b") instance=ExtResource("13_hxns0")]
+[node name="Mecha" parent="Garra" unique_id=1257056170 node_paths=PackedStringArray("point_a", "point_b") instance=ExtResource("11_26ele")]
 position = Vector2(213, 81)
 point_a = NodePath("../Ponto 1")
 point_b = NodePath("../Ponto 2")
-box_scene = ExtResource("5_k07ct")
+box_scene = ExtResource("12_fycyp")
 cor_da_garra = Color(0.5248545, 0.1180244, 0, 1)
 
 [node name="Ponto 1" type="Marker2D" parent="Garra" unique_id=647792488]
@@ -404,12 +405,12 @@ position = Vector2(479, 74)
 
 [node name="Garra2" type="Node2D" parent="." unique_id=283214330]
 
-[node name="Mecha" parent="Garra2" unique_id=1089562557 node_paths=PackedStringArray("point_a", "point_b") instance=ExtResource("13_hxns0")]
+[node name="Mecha" parent="Garra2" unique_id=1089562557 node_paths=PackedStringArray("point_a", "point_b") instance=ExtResource("11_26ele")]
 position = Vector2(-367, 525)
 rotation = -3.1415927
 point_a = NodePath("../Ponto 2")
 point_b = NodePath("../Ponto 1")
-box_scene = ExtResource("5_k07ct")
+box_scene = ExtResource("12_fycyp")
 spawn_inverted = true
 cor_da_garra = Color(0.03469061, 0.16733783, 0.24601772, 1)
 
@@ -421,16 +422,16 @@ position = Vector2(479, 534)
 
 [node name="Steel" type="Node2D" parent="." unique_id=451641756]
 
-[node name="Steel" parent="Steel" unique_id=158383144 instance=ExtResource("18_ukchq")]
+[node name="Steel" parent="Steel" unique_id=158383144 instance=ExtResource("13_spgtn")]
 position = Vector2(-360, 114)
 
-[node name="Steel2" parent="Steel" unique_id=1071810586 instance=ExtResource("18_ukchq")]
+[node name="Steel2" parent="Steel" unique_id=1071810586 instance=ExtResource("13_spgtn")]
 position = Vector2(393, 113)
 rotation = 3.1415925
 
-[node name="Steel3" parent="Steel" unique_id=1548883705 instance=ExtResource("18_ukchq")]
+[node name="Steel3" parent="Steel" unique_id=1548883705 instance=ExtResource("13_spgtn")]
 position = Vector2(-326, 511)
 
-[node name="Steel4" parent="Steel" unique_id=1261582647 instance=ExtResource("18_ukchq")]
+[node name="Steel4" parent="Steel" unique_id=1261582647 instance=ExtResource("13_spgtn")]
 position = Vector2(328, 509)
 rotation = 3.1415925

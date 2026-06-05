@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://j0tq4omw5yxh" path="res://objects/player/player.tscn" id="11_drpu1"]
 [ext_resource type="Script" uid="uid://bkoi83befav3f" path="res://scripts/obstacles/trap.gd" id="12_0rnb7"]
 [ext_resource type="Texture2D" uid="uid://bb5tnyytx44mr" path="res://assets/images/light texture.png" id="13_3cmo6"]
+[ext_resource type="Script" uid="uid://ejt1amw7kbnb" path="res://scripts/scenario/endGame.gd" id="13_w4gs4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gf1c7"]
 texture = ExtResource("1_4h3k5")
@@ -345,6 +346,9 @@ size = Vector2(10, 226.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w4gs4"]
 size = Vector2(176, 18)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0rnb7"]
+size = Vector2(40, 76)
+
 [node name="Level01" type="Node2D" unique_id=1356232665]
 script = ExtResource("1_1qp13")
 
@@ -536,6 +540,15 @@ texture = ExtResource("10_w4gs4")
 [node name="ladderSpr3" type="Sprite2D" parent="obstacles/ladder4/ladder" unique_id=331035836]
 position = Vector2(0, -64)
 texture = ExtResource("10_w4gs4")
+
+[node name="endGame" type="Area2D" parent="obstacles" unique_id=1514956748]
+position = Vector2(1125, 298)
+script = ExtResource("13_w4gs4")
+nextLevel = "level2"
+
+[node name="endGameShape" type="CollisionShape2D" parent="obstacles/endGame" unique_id=368658177]
+position = Vector2(6, -27)
+shape = SubResource("RectangleShape2D_0rnb7")
 
 [node name="Player" parent="." unique_id=1047240455 instance=ExtResource("11_drpu1")]
 position = Vector2(18, 277)
