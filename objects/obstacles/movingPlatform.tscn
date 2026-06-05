@@ -1,27 +1,69 @@
 [gd_scene format=3 uid="uid://cad7cs8trheug"]
 
 [ext_resource type="Script" uid="uid://b0l3g1dercmvu" path="res://scripts/obstacles/movingPlatform.gd" id="1_qjcdd"]
-[ext_resource type="Texture2D" uid="uid://dl5jixny7h2u" path="res://assets/images/basic platform.png" id="1_uefcm"]
+[ext_resource type="Texture2D" uid="uid://bfh1irck63hpn" path="res://assets/images/scenario/floor.png" id="2_qjcdd"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ubv62"]
+texture = ExtResource("2_qjcdd")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:3/0 = 0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:3/0 = 0
+3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_ucygr"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_ubv62")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qjcdd"]
 size = Vector2(32, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ubv62"]
-size = Vector2(32, 20)
+size = Vector2(32, 56)
 
 [node name="MovingPlatform" type="Node2D" unique_id=427466028]
 script = ExtResource("1_qjcdd")
 
 [node name="platformBody" type="StaticBody2D" parent="." unique_id=642050021]
 
-[node name="platformSpr" type="Sprite2D" parent="platformBody" unique_id=226992950]
-texture = ExtResource("1_uefcm")
+[node name="floor" type="TileMapLayer" parent="platformBody" unique_id=1628755580]
+position = Vector2(0, 37)
+tile_map_data = PackedByteArray(0, 0, 255, 255, 253, 255, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 253, 255, 0, 0, 3, 0, 1, 0, 0, 0, 0, 0, 254, 255, 0, 0, 3, 0, 3, 0, 0, 0, 255, 255, 254, 255, 0, 0, 1, 0, 3, 0, 0, 0)
+tile_set = SubResource("TileSet_ucygr")
 
 [node name="platformCollision" type="CollisionShape2D" parent="platformBody" unique_id=697195496]
+position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_qjcdd")
 
 [node name="detector" type="Area2D" parent="." unique_id=1869236382]
 
 [node name="detectorCollision" type="CollisionShape2D" parent="detector" unique_id=725989659]
-position = Vector2(0, -26)
+position = Vector2(0, 5)
 shape = SubResource("RectangleShape2D_ubv62")

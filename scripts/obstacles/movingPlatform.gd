@@ -35,14 +35,14 @@ func movePassengers() -> void:
 		passanger.movePlayerWithPlatform(moveSpeed)
 
 func onBodyEntered(body):
-	if body is CharacterBody2D:
+	if body.name == "playerBody":
 		var alvo = body.get_parent()
 		if alvo.has_method("movePlayerWithPlatform"):
 			if not passangers.has(alvo):
 				passangers.append(alvo)
 
 func onBodyExited(body):
-	if body is CharacterBody2D:
+	if body.name == "playerBody":
 		var alvo = body.get_parent()
 		if passangers.has(alvo):
 			passangers.erase(alvo)

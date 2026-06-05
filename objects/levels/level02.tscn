@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://bejq6gqnthow8" path="res://objects/scenario/mecha.tscn" id="11_26ele"]
 [ext_resource type="PackedScene" uid="uid://iwh8x54a7k7a" path="res://objects/obstacles/box.tscn" id="12_fycyp"]
 [ext_resource type="PackedScene" uid="uid://qh6icqodvqpv" path="res://objects/scenario/steel.tscn" id="13_spgtn"]
+[ext_resource type="Script" uid="uid://ejt1amw7kbnb" path="res://scripts/scenario/endGame.gd" id="14_tc7n1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x56sq"]
 texture = ExtResource("2_tc7n1")
@@ -338,6 +339,9 @@ texture = ExtResource("5_66fol")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_slxrl")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j3k7w"]
+size = Vector2(14, 34)
+
 [node name="Level4" type="Node2D" unique_id=44074444]
 script = ExtResource("1_v7x1m")
 
@@ -372,7 +376,7 @@ position = Vector2(239, 278)
 hasDoorLock = true
 
 [node name="Key" parent="." unique_id=1457610210 instance=ExtResource("9_2nsxm")]
-position = Vector2(-258, 472)
+position = Vector2(-169, 472)
 
 [node name="camera" type="Camera2D" parent="." unique_id=888559363]
 position = Vector2(11, 324)
@@ -435,3 +439,12 @@ position = Vector2(-326, 511)
 [node name="Steel4" parent="Steel" unique_id=1261582647 instance=ExtResource("13_spgtn")]
 position = Vector2(328, 509)
 rotation = 3.1415925
+
+[node name="endGame" type="Area2D" parent="." unique_id=561747812]
+position = Vector2(284, 275)
+script = ExtResource("14_tc7n1")
+nextLevel = "level3"
+
+[node name="endGameShape" type="CollisionShape2D" parent="endGame" unique_id=24228115]
+position = Vector2(-45, 1)
+shape = SubResource("RectangleShape2D_j3k7w")
